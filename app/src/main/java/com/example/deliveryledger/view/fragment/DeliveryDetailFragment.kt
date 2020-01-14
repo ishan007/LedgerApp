@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.RequestManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryDetailBinding
 import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
@@ -19,6 +20,9 @@ class DeliveryDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var glideInstance: RequestManager
 
     private lateinit var binding: FragmentDeliveryDetailBinding
 
@@ -47,6 +51,7 @@ class DeliveryDetailFragment : BaseFragment() {
         binding.addToFavorite.setOnClickListener {
             deliveryLedgerViewModel.updateDeliveryFavoriteState(binding.delivery!!)
         }
+        binding.glideInstance = glideInstance
 
         return binding.root
     }

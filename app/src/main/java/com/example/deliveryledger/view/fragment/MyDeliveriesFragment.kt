@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentMyDeliveriesBinding
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
@@ -36,13 +37,16 @@ class MyDeliveriesFragment : BaseFragment() {
     lateinit var disposable: CompositeDisposable
 
     @Inject
+    lateinit var glideInstance: RequestManager
+
+    @Inject
     lateinit var onErrorObserver: PublishSubject<OnEvent<*>>
 
     private val adapter: DeliveryListAdapter by lazy {
         DeliveryListAdapter(DeliveryListAdapter.DeliverySelectionListener {
             deliveryLedgerViewModel.onDeliverySelected(it)
             deliveryLedgerViewModel.getEventObserver().onNext(OnEvent(OnItemSelected(it)))
-        })
+        }, glideInstance)
     }
 
 

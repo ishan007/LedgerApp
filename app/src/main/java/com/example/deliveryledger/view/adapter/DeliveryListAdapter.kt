@@ -6,11 +6,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.DeliveryListItemBinding
 import com.example.deliveryledger.repository.model.Delivery
 
-class DeliveryListAdapter(private val deliverySelectionListener: DeliverySelectionListener)
+class DeliveryListAdapter(private val deliverySelectionListener: DeliverySelectionListener,
+                          private val glideInstance: RequestManager)
     : PagedListAdapter<Delivery, DeliveryListAdapter.DeliveryItemVH>(DIFF_CALLBACK){
 
     class DeliveryItemVH(var binding: DeliveryListItemBinding) : RecyclerView.ViewHolder(binding.root)
@@ -29,6 +31,7 @@ class DeliveryListAdapter(private val deliverySelectionListener: DeliverySelecti
     override fun onBindViewHolder(holder: DeliveryItemVH, position: Int) {
         holder.binding.delivery = getItem(position)
         holder.binding.deliverySelectionListener = deliverySelectionListener
+        holder.binding.glideInstance = glideInstance
     }
 
     companion object {

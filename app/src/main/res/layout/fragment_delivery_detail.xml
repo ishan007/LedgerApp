@@ -14,6 +14,10 @@
         <variable
             name="color"
             type="android.graphics.Color" />
+
+        <variable
+            name="glideInstance"
+            type="com.bumptech.glide.RequestManager" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +108,8 @@
                             app:layout_constraintTop_toBottomOf="@+id/goods_to_deliver_tv"
                             app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="@string/goods_image"
-                            app:imageUrl="@{delivery.goodsPicture}"/>
+                            app:imageUrl="@{delivery.goodsPicture}"
+                            app:glideInstance="@{glideInstance}"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -12,6 +12,10 @@
             type="android.view.View" />
 
         <variable
+            name="glideInstance"
+            type="com.bumptech.glide.RequestManager" />
+
+        <variable
             name="deliverySelectionListener"
             type="com.example.deliveryledger.view.adapter.DeliveryListAdapter.DeliverySelectionListener" />
     </data>
@@ -39,7 +43,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:contentDescription="@string/goods_image"
-                app:imageUrl="@{delivery.goodsPicture}"/>
+                app:imageUrl="@{delivery.goodsPicture}"
+                app:glideInstance="@{glideInstance}"/>
 
             <LinearLayout
                 android:id="@+id/text_container_ll"
