@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">DeliveryLedger</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="from_delivery">From %s</string>
+    <string name="to_delivery">To %s</string>
+    <string name="goods_image">Goods image</string>
+    <string name="favorite_icon">Favorite icon</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="goods_to_deliver">Goods to deliver</string>
+    <string name="delivery_fee">Delivery Fee</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="login">Login</string>
+</resources>
