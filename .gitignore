@@ -12,3 +12,5 @@ build
 /captures
 .externalNativeBuild
 .cxx
+schemas/com.example.deliveryledger.repository.storage.DeliveryLedgerDB/
+.idea/vcs.xml
