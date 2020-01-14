@@ -19,7 +19,7 @@ class DataGeneratorTest {
                     "$123", "$123", route, sender,false)
                 list.add(delivery)
             }
-            return list;
+            return list
         }
 
     }

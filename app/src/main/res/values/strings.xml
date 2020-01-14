@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">DeliveryLedger</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="from_delivery">From %s</string>
     <string name="to_delivery">To %s</string>
     <string name="goods_image">Goods image</string>

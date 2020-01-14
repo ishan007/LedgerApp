@@ -2,11 +2,8 @@ package com.example.deliveryledger.di.repository
 
 import android.app.Application
 import androidx.room.Room
-import com.example.deliveryledger.repository.Repository
-import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.network.RequestApi
 import com.example.deliveryledger.repository.storage.DeliveryLedgerDB
-import com.example.deliveryledger.repository.storage.LocalDataSource
 import com.example.deliveryledger.util.DatabaseConstants
 import com.example.deliveryledger.util.NetworkConstants
 import dagger.Module

@@ -6,9 +6,6 @@ import dagger.android.support.DaggerFragment
 /**
  * Base fragment class
  */
-abstract class BaseFragment : DaggerFragment() {
-
-
-}
+abstract class BaseFragment : DaggerFragment()
 
 
