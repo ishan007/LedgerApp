@@ -1,29 +1,34 @@
 package com.example.deliveryledger.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.deliveryledger.repository.DeliveryDataBoundaryCallback
-import com.example.deliveryledger.repository.domain.DeliverDetailUseCase
-import com.example.deliveryledger.repository.domain.DeliveryListUseCase
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.domain.base.DeliveryDetailUseCase
+import com.example.deliveryledger.repository.domain.base.DeliveryListUseCase
+import com.example.deliveryledger.repository.domain.base.PageLoadUseCase
+import com.example.deliveryledger.repository.domain.base.RefreshDeliveryListUseCase
+import com.example.deliveryledger.repository.entities.Delivery
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 
 class DeliveryLedgerViewModel @Inject constructor(
     private val deliveryListUseCase: DeliveryListUseCase,
-    private val deliveryDetailUseCase: DeliverDetailUseCase,
+    private val deliverDetailUseCase: DeliveryDetailUseCase,
+    private val pageLoadUseCase: PageLoadUseCase,
+    private val refreshDeliveryListUseCase: RefreshDeliveryListUseCase,
     private val boundaryCallback: DeliveryDataBoundaryCallback,
     private val disposable: CompositeDisposable,
-    private val onEventObserver: PublishSubject<OnEvent<*>>
+    private val onEventObserver: MutableLiveData<OnEvent<*>>
 ): ViewModel(){
 
 
-    val selectedDeliverySubject: BehaviorSubject<Delivery> = BehaviorSubject.create()
+    private val _selectedDelivery = MutableLiveData<Delivery>()
+    val selectedDelivery : LiveData<Delivery> = _selectedDelivery
 
     val deliveryList: Observable<PagedList<Delivery>> by lazy {
 
@@ -31,7 +36,7 @@ class DeliveryLedgerViewModel @Inject constructor(
             .subscribe(object: DeliveryObserver<DeliveryDataBoundaryCallback.BoundaryState>(onEventObserver, disposable){
 
                 override fun onNext(t: DeliveryDataBoundaryCallback.BoundaryState) {
-                    deliveryListUseCase.loadData(t).subscribe(DeliveryObserver(onEventObserver, disposable))
+                    pageLoadUseCase.loadData(t).subscribe(DeliveryObserver(onEventObserver, disposable))
                 }
 
             })
@@ -42,7 +47,7 @@ class DeliveryLedgerViewModel @Inject constructor(
     }
 
     fun updateDeliveryFavoriteState(delivery: Delivery){
-        deliveryDetailUseCase.updateDeliveryFavoriteState(delivery.id, !delivery.isFavorite)
+        deliverDetailUseCase.updateDeliveryFavoriteState(delivery.id, !delivery.isFavorite)
             .subscribe(object : DeliveryObserver<Delivery>(onEventObserver, disposable){
                 override fun onNext(t: Delivery) {
                     onDeliverySelected(t)
@@ -51,15 +56,11 @@ class DeliveryLedgerViewModel @Inject constructor(
     }
 
     fun onDeliverySelected(delivery: Delivery){
-        selectedDeliverySubject.onNext(delivery)
-    }
-
-    fun getEventObserver() : PublishSubject<OnEvent<*>>{
-        return onEventObserver
+        _selectedDelivery.postValue(delivery)
     }
 
     fun refreshData(): Observable<Unit>{
-        return deliveryListUseCase.refreshData()
+        return refreshDeliveryListUseCase.refreshData()
     }
 
     override fun onCleared() {

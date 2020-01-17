@@ -1,6 +1,6 @@
 package com.example.deliveryledger.repository.network
 
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

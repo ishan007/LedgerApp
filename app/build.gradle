@@ -27,7 +27,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -97,12 +98,5 @@ dependencies {
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:1.10.19'
     testImplementation 'org.robolectric:robolectric:4.3'
-    testImplementation 'io.mockk:mockk:1.9.3'
-
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1") {
-        exclude group: "com.squareup.okhttp3"
-    }
-
-
 
 }

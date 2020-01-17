@@ -6,21 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.RequestManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentMyDeliveriesBinding
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
-import com.example.deliveryledger.viewmodel.DeliveryObserver
 import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
+import com.example.deliveryledger.viewmodel.DeliveryObserver
 import com.example.deliveryledger.viewmodel.OnEvent
 import com.example.deliveryledger.viewmodel.OnItemSelected
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 
@@ -37,16 +36,14 @@ class MyDeliveriesFragment : BaseFragment() {
     lateinit var disposable: CompositeDisposable
 
     @Inject
-    lateinit var glideInstance: RequestManager
+    lateinit var onEventObserver: MutableLiveData<OnEvent<*>>
 
-    @Inject
-    lateinit var onErrorObserver: PublishSubject<OnEvent<*>>
 
     private val adapter: DeliveryListAdapter by lazy {
         DeliveryListAdapter(DeliveryListAdapter.DeliverySelectionListener {
             deliveryLedgerViewModel.onDeliverySelected(it)
-            deliveryLedgerViewModel.getEventObserver().onNext(OnEvent(OnItemSelected(it)))
-        }, glideInstance)
+            onEventObserver.value = OnEvent(OnItemSelected(it))
+        })
     }
 
 
@@ -94,7 +91,7 @@ class MyDeliveriesFragment : BaseFragment() {
     private fun initSwipeRefresh(){
         binding.swipeRefreshView.setOnRefreshListener {
             deliveryLedgerViewModel.refreshData()
-                .subscribeOn(Schedulers.io()).subscribe(object : DeliveryObserver<Unit>(onErrorObserver, disposable){
+                .subscribeOn(Schedulers.io()).subscribe(object : DeliveryObserver<Unit>(onEventObserver, disposable){
                     override fun onComplete() {
                         binding.swipeRefreshView.isRefreshing = false
                     }
@@ -113,7 +110,6 @@ class MyDeliveriesFragment : BaseFragment() {
          * Use this factory method to create a new instance of MyDeliveriesFragment
          * @return A new instance of fragment MyDeliveriesFragment.
          */
-        @JvmStatic
         fun newInstance() = MyDeliveriesFragment()
     }
 }

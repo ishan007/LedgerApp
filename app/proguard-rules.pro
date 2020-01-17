@@ -18,4 +18,11 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
+
+-keep class retrofit2.http.**
+-keep public class * extends retrofit2.http.**
+-keep class retrofit2.converter.**
+-keep public class * extends retrofit2.converter.**

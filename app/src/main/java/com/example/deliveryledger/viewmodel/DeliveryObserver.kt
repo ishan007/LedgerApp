@@ -1,11 +1,11 @@
 package com.example.deliveryledger.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.PublishSubject
 
-open class DeliveryObserver<T>(private val onEvent: PublishSubject<OnEvent<*>>,
+open class DeliveryObserver<T>(private val onEvent: MutableLiveData<OnEvent<*>>,
                                private val disposable: CompositeDisposable) : Observer<T>{
     override fun onComplete() {
 
@@ -19,7 +19,7 @@ open class DeliveryObserver<T>(private val onEvent: PublishSubject<OnEvent<*>>,
     }
 
     override fun onError(e: Throwable) {
-        onEvent.onNext(OnEvent(OnNetworkError(e.localizedMessage ?: "Something went wrong")))
+        onEvent.postValue(OnEvent(OnNetworkError(e.localizedMessage ?: "Something went wrong")))
     }
 
 }

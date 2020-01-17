@@ -1,6 +1,6 @@
 package com.example.deliveryledger.viewmodel
 
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 
 
 sealed class EventType

@@ -1,6 +1,6 @@
 package com.example.deliveryledger
 
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.network.RequestApi
 import io.reactivex.Observable

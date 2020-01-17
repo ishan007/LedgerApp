@@ -1,4 +1,4 @@
-package com.example.deliveryledger.repository.model
+package com.example.deliveryledger.repository.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity

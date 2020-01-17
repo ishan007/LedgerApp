@@ -1,6 +1,7 @@
 package com.example.deliveryledger.di
 
 import android.app.Application
+import com.example.deliveryledger.di.repository.DomainModule
 import com.example.deliveryledger.di.repository.RepositoryModule
 import com.example.deliveryledger.di.view.ActivityModule
 import com.example.deliveryledger.di.view.FragmentModule
@@ -18,7 +19,8 @@ import javax.inject.Singleton
         RepositoryModule::class,
         ViewModelFactoryModule::class,
         ActivityModule::class,
-        FragmentModule::class]
+        FragmentModule::class,
+        DomainModule::class]
 )
 interface AppComponent : AndroidInjector<DeliveryApplication> {
 
@@ -29,4 +31,5 @@ interface AppComponent : AndroidInjector<DeliveryApplication> {
 
         fun build(): AppComponent
     }
+
 }

@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.room.paging.LimitOffsetDataSource
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.deliveryledger.repository.Repository
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.network.RequestApi
 import com.example.deliveryledger.repository.storage.DeliveryLedgerDB

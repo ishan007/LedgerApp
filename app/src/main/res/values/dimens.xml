@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dp_10">10dp</dimen>
-    <dimen name="dp_100">100dp</dimen>
-    <dimen name="dp_5">5dp</dimen>
-    <dimen name="dp_50">50dp</dimen>
-    <dimen name="dp_200">200dp</dimen>
+
+    <dimen name="loginButtonHeight">50dp</dimen>
+    <dimen name="cardViewPadding">10dp</dimen>
+    <dimen name="carViewElevation">10dp</dimen>
+    <dimen name="cardViewCornerRadius">5dp</dimen>
+    <dimen name="goodsThumbnailSize">100dp</dimen>
+    <dimen name="textPadding">5dp</dimen>
+    <dimen name="favIconSize">50dp</dimen>
+    <dimen name="goodsDetailCardTopMargin">50dp</dimen>
+    <dimen name="goodsImageSize">200dp</dimen>
+    <dimen name="goodsImageTopMargin">10dp</dimen>
+    <dimen name="priceCardTopMargin">50dp</dimen>
+    <dimen name="addToFavoriteBtnHeight">50dp</dimen>
 </resources>

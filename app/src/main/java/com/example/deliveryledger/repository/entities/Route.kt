@@ -1,4 +1,4 @@
-package com.example.deliveryledger.repository.model
+package com.example.deliveryledger.repository.entities
 
 
 data class Route(val start: String,

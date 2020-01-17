@@ -1,7 +1,7 @@
 package com.example.deliveryledger.repository
 
 import androidx.paging.DataSource
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.storage.LocalDataSource
 import io.reactivex.Observable

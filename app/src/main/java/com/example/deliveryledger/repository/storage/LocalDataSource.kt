@@ -1,7 +1,7 @@
 package com.example.deliveryledger.repository.storage
 
 import androidx.paging.DataSource
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.RequestManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryDetailBinding
 import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
@@ -21,15 +20,9 @@ class DeliveryDetailFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var glideInstance: RequestManager
-
     private lateinit var binding: FragmentDeliveryDetailBinding
 
     private lateinit var deliveryLedgerViewModel: DeliveryLedgerViewModel
-
-    private val disposable = CompositeDisposable()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,26 +44,19 @@ class DeliveryDetailFragment : BaseFragment() {
         binding.addToFavorite.setOnClickListener {
             deliveryLedgerViewModel.updateDeliveryFavoriteState(binding.delivery!!)
         }
-        binding.glideInstance = glideInstance
 
         return binding.root
     }
 
+
     override fun onStart() {
-        super.onStart()
-        disposable.add(deliveryLedgerViewModel.selectedDeliverySubject.subscribe {
+        deliveryLedgerViewModel.selectedDelivery.observe(this, Observer {
             binding.delivery = it
         })
+        super.onStart()
     }
-
-    override fun onStop() {
-        disposable.clear()
-        super.onStop()
-    }
-
 
     companion object {
-        @JvmStatic
         fun newInstance() = DeliveryDetailFragment()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.deliveryledger.repository.model
+package com.example.deliveryledger.repository.entities
 
 data class Sender (val name: String,
                    val phone: String,

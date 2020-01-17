@@ -2,7 +2,7 @@ package com.example.deliveryledger.repository
 
 import android.util.Log
 import androidx.paging.PagedList
-import com.example.deliveryledger.repository.model.Delivery
+import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.util.AppConstants.TAG
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject

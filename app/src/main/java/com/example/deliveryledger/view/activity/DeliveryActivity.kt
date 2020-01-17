@@ -3,28 +3,27 @@ package com.example.deliveryledger.view.activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
 import com.example.deliveryledger.view.fragment.MyDeliveriesFragment
-import com.example.deliveryledger.viewmodel.*
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
+import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
+import com.example.deliveryledger.viewmodel.OnEvent
+import com.example.deliveryledger.viewmodel.OnItemSelected
+import com.example.deliveryledger.viewmodel.OnNetworkError
 import javax.inject.Inject
 
 class DeliveryActivity : BaseActivity() {
 
     @Inject
-    lateinit var disposable: CompositeDisposable
-
-    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var onEventObserver: PublishSubject<OnEvent<*>>
+    lateinit var onEventObserver: MutableLiveData<OnEvent<*>>
 
     private lateinit var deliveryLedgerViewModel: DeliveryLedgerViewModel
 
@@ -39,6 +38,9 @@ class DeliveryActivity : BaseActivity() {
         deliveryLedgerViewModel = ViewModelProviders.of(this, viewModelFactory).
             get(DeliveryLedgerViewModel::class.java)
 
+        onEventObserver.observe(this, Observer {
+            handleEvent(it)
+        })
 
     }
 
@@ -54,22 +56,6 @@ class DeliveryActivity : BaseActivity() {
             }
         }
     }
-
-    override fun onStart() {
-        super.onStart()
-        onEventObserver.observeOn(AndroidSchedulers.mainThread()).subscribe(object :
-            DeliveryObserver<OnEvent<*>>(onEventObserver, disposable){
-            override fun onNext(t: OnEvent<*>) {
-                handleEvent(t)
-            }
-        })
-    }
-
-    override fun onStop() {
-        disposable.clear()
-        super.onStop()
-    }
-
 
     private fun initFragment(){
         supportFragmentManager.beginTransaction()

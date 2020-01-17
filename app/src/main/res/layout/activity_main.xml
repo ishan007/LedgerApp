@@ -7,7 +7,7 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_50"
+        android:layout_height="@dimen/loginButtonHeight"
         android:layout_centerInParent="true"
         android:text="@string/login"
         android:onClick="login"/>
