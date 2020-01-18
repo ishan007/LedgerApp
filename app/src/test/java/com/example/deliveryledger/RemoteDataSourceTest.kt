@@ -4,8 +4,9 @@ import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.network.RequestApi
 import io.reactivex.Observable
-import org.junit.Assert
+import io.reactivex.observers.TestObserver
 import org.junit.Test
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 
@@ -15,12 +16,8 @@ class RemoteDataSourceTest : BaseUnitTest(){
     @Mock
     private lateinit var requestApi: RequestApi
 
+    @InjectMocks
     private lateinit var remoteDataSource: RemoteDataSource
-
-    override fun setup() {
-        super.setup()
-        remoteDataSource = RemoteDataSource(requestApi)
-    }
 
     @Test
     fun getDeliveryListFromApi(){
@@ -28,12 +25,8 @@ class RemoteDataSourceTest : BaseUnitTest(){
         Mockito.`when`(requestApi.getDeliveriesList(0, 20))
             .thenReturn(Observable.just(list))
         val observable = remoteDataSource.getDeliveriesListFromAPI(0)
-
-        val expectedList = arrayListOf<Delivery>()
-        observable.subscribe{
-            expectedList.addAll(it)
-        }
-
-        Assert.assertEquals(list.size, expectedList.size)
+        val testObserver = TestObserver<List<Delivery>>()
+        observable.subscribe(testObserver)
+        testObserver.assertValue(list)
     }
 }

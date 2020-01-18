@@ -1,16 +1,13 @@
 package com.example.deliveryledger
 
-import android.content.Context
-import androidx.room.Room
-import androidx.room.paging.LimitOffsetDataSource
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.paging.DataSource
+import androidx.paging.PositionalDataSource
 import com.example.deliveryledger.repository.Repository
 import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
-import com.example.deliveryledger.repository.network.RequestApi
-import com.example.deliveryledger.repository.storage.DeliveryLedgerDB
 import com.example.deliveryledger.repository.storage.LocalDataSource
 import io.reactivex.Observable
+import io.reactivex.observers.TestObserver
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -23,60 +20,77 @@ import java.io.IOException
 class RepositoryTest : BaseUnitTest(){
 
     @Mock
-    private lateinit var requestApi: RequestApi
-
-    @InjectMocks
     private lateinit var remoteDataSource: RemoteDataSource
 
-    private lateinit var repository: Repository
-
-    private lateinit var db: DeliveryLedgerDB
-
-    private lateinit var appContext: Context
-
+    @Mock
     private lateinit var localDataSource: LocalDataSource
 
-    override fun setup() {
-        super.setup()
+    @InjectMocks
+    private lateinit var repository: Repository
 
-        appContext = InstrumentationRegistry.getInstrumentation().targetContext
-
-        db = Room.inMemoryDatabaseBuilder(appContext, DeliveryLedgerDB::class.java)
-            .allowMainThreadQueries().build()
-        localDataSource = LocalDataSource(db)
-
-        remoteDataSource = RemoteDataSource(requestApi)
-
-        repository = Repository(localDataSource, remoteDataSource)
-    }
 
     @Test
-    fun testRepo(){
+    fun testListFromDB(){
         val list = DataGeneratorTest.getDeliveryList()
+        val dataSource = getDataSource(list)
 
-        Mockito.`when`(requestApi.getDeliveriesList(0,20))
+        Mockito.`when`(localDataSource.getDeliveryListDataSource()).thenReturn(dataSource)
+
+        val obtainedDataSource = repository.getDeliveryListDataSource()
+        Assert.assertSame(dataSource, obtainedDataSource)
+    }
+
+
+    @Test
+    fun testListFromApi(){
+        val list = DataGeneratorTest.getDeliveryList()
+        Mockito.`when`(remoteDataSource.getDeliveriesListFromAPI(0))
             .thenReturn(Observable.just(list))
 
-        val serverResponseList = arrayListOf<Delivery>()
-
-        repository.getListFromAPI(0).subscribe{
-            serverResponseList.addAll(it)
-        }
-
-        repository.insertListIntoDB(serverResponseList)
-
-        val itemCount = (repository.getDeliveryListDataSource().create() as LimitOffsetDataSource)
-            .countItems()
-
-        Assert.assertEquals(list.size, itemCount)
-        Assert.assertEquals(list.size, repository.getDeliveryCount())
-
+        val observable = repository.getListFromAPI(0)
+        val testObserver = TestObserver<List<Delivery>>()
+        observable.subscribe(testObserver)
+        testObserver.assertValue(list)
     }
+
+
+    @Test
+    fun testInsertListInDB(){
+        val list = DataGeneratorTest.getDeliveryList()
+        Mockito.`when`(localDataSource.insertListIntoDB(list)).then {
+            Unit
+        }
+        repository.insertListIntoDB(list)
+        Mockito.verify(localDataSource, Mockito.times(1)).insertListIntoDB(list)
+    }
+
+
+    private fun getDataSource(list: List<Delivery>): DataSource.Factory<Int, Delivery>{
+        return object : DataSource.Factory<Int, Delivery>(){
+            override fun create(): DataSource<Int, Delivery> {
+                return object : PositionalDataSource<Delivery>(){
+                    override fun loadRange(
+                        params: LoadRangeParams,
+                        callback: LoadRangeCallback<Delivery>
+                    ) {
+
+                    }
+
+                    override fun loadInitial(params: LoadInitialParams,
+                                             callback: LoadInitialCallback<Delivery>
+                    ) {
+                        callback.onResult(list,0)
+                    }
+
+                }
+            }
+        }
+    }
+
 
     @After
     @Throws(IOException::class)
     fun clean(){
         localDataSource.clearDb()
-        db.close()
     }
 }
