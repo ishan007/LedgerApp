@@ -11,7 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryDetailBinding
-import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
+import com.example.deliveryledger.viewmodel.DeliveryDetailViewModel
+import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
 import javax.inject.Inject
 
 
@@ -22,12 +23,20 @@ class DeliveryDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentDeliveryDetailBinding
 
-    private lateinit var deliveryLedgerViewModel: DeliveryLedgerViewModel
+    private lateinit var deliveryActivityViewModel: DeliveryActivityViewModel
+
+    private lateinit var deliveryDetailViewModel: DeliveryDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        deliveryLedgerViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
-            get(DeliveryLedgerViewModel::class.java)
+        deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
+            get(DeliveryActivityViewModel::class.java)
+        deliveryDetailViewModel = ViewModelProviders.of(this, viewModelFactory).
+            get(DeliveryDetailViewModel::class.java)
+
+        deliveryActivityViewModel.selectedDeliveryId.observe(this, Observer {
+            deliveryDetailViewModel.setSelectedDelivery(it)
+        })
     }
 
 
@@ -42,7 +51,7 @@ class DeliveryDetailFragment : BaseFragment() {
             container, false)
 
         binding.addToFavorite.setOnClickListener {
-            deliveryLedgerViewModel.updateDeliveryFavoriteState(binding.delivery!!)
+            deliveryDetailViewModel.updateDeliveryFavoriteState(binding.delivery!!)
         }
 
         return binding.root
@@ -50,7 +59,7 @@ class DeliveryDetailFragment : BaseFragment() {
 
 
     override fun onStart() {
-        deliveryLedgerViewModel.selectedDelivery.observe(this, Observer {
+        deliveryDetailViewModel.delivery.observe(this, Observer {
             binding.delivery = it
         })
         super.onStart()

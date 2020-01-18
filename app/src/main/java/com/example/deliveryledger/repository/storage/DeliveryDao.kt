@@ -1,10 +1,7 @@
 package com.example.deliveryledger.repository.storage
 
 import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.deliveryledger.repository.entities.Delivery
 
 @Dao
@@ -19,8 +16,8 @@ interface DeliveryDao {
     @Query("SELECT COUNT(id) FROM Delivery")
     fun getDeliveryCount(): Int
 
-    @Query("UPDATE Delivery SET isFavorite = :isFavorite WHERE id =:id")
-    fun updateDeliveryFavoriteState(id: String, isFavorite: Boolean)
+    @Update
+    fun updateDeliveryFavoriteState(delivery: Delivery)
 
     @Query("SELECT * FROM Delivery WHERE id = :id")
     fun getDelivery(id: String): Delivery

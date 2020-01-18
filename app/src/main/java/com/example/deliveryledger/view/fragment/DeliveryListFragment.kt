@@ -12,22 +12,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deliveryledger.R
-import com.example.deliveryledger.databinding.FragmentMyDeliveriesBinding
+import com.example.deliveryledger.databinding.FragmentDeliveryListBinding
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
-import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
-import com.example.deliveryledger.viewmodel.DeliveryObserver
-import com.example.deliveryledger.viewmodel.OnEvent
-import com.example.deliveryledger.viewmodel.OnItemSelected
+import com.example.deliveryledger.viewmodel.*
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class MyDeliveriesFragment : BaseFragment() {
+class DeliveryListFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentMyDeliveriesBinding
+    private lateinit var binding: FragmentDeliveryListBinding
 
-    private lateinit var deliveryLedgerViewModel: DeliveryLedgerViewModel
+    private lateinit var deliveryListViewModel: DeliveryListViewModel
+
+    private lateinit var deliveryActivityViewModel: DeliveryActivityViewModel
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -41,16 +39,18 @@ class MyDeliveriesFragment : BaseFragment() {
 
     private val adapter: DeliveryListAdapter by lazy {
         DeliveryListAdapter(DeliveryListAdapter.DeliverySelectionListener {
-            deliveryLedgerViewModel.onDeliverySelected(it)
-            onEventObserver.value = OnEvent(OnItemSelected(it))
+            deliveryActivityViewModel.onDeliverySelected(it.id)
+            onEventObserver.value = OnEvent(OnDeliveryItemSelected)
         })
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        deliveryLedgerViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
-            get(DeliveryLedgerViewModel::class.java)
+        deliveryListViewModel = ViewModelProviders.of(this, viewModelFactory).
+            get(DeliveryListViewModel::class.java)
+        deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
+            get(DeliveryActivityViewModel::class.java)
     }
 
 
@@ -61,7 +61,7 @@ class MyDeliveriesFragment : BaseFragment() {
 
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
-            R.layout.fragment_my_deliveries,
+            R.layout.fragment_delivery_list,
             container, false)
 
         initDeliveryListAdapter()
@@ -72,7 +72,7 @@ class MyDeliveriesFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        disposable.add(deliveryLedgerViewModel.deliveryList.subscribe(adapter::submitList))
+        disposable.add(deliveryListViewModel.deliveryList.subscribe(adapter::submitList))
     }
 
     override fun onStop() {
@@ -90,8 +90,8 @@ class MyDeliveriesFragment : BaseFragment() {
 
     private fun initSwipeRefresh(){
         binding.swipeRefreshView.setOnRefreshListener {
-            deliveryLedgerViewModel.refreshData()
-                .subscribeOn(Schedulers.io()).subscribe(object : DeliveryObserver<Unit>(onEventObserver, disposable){
+            deliveryListViewModel.refreshData()
+                .subscribe(object : DeliveryObserver<Unit>(onEventObserver, disposable){
                     override fun onComplete() {
                         binding.swipeRefreshView.isRefreshing = false
                     }
@@ -110,6 +110,6 @@ class MyDeliveriesFragment : BaseFragment() {
          * Use this factory method to create a new instance of MyDeliveriesFragment
          * @return A new instance of fragment MyDeliveriesFragment.
          */
-        fun newInstance() = MyDeliveriesFragment()
+        fun newInstance() = DeliveryListFragment()
     }
 }

@@ -2,8 +2,6 @@ package com.example.deliveryledger.repository.storage
 
 import androidx.paging.DataSource
 import com.example.deliveryledger.repository.entities.Delivery
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(private val database: DeliveryLedgerDB){
@@ -12,12 +10,9 @@ class LocalDataSource @Inject constructor(private val database: DeliveryLedgerDB
         return database.getDeliveryDao().getDeliveryList()
     }
 
-    fun updateDeliveryFavoriteState(id: String, isFavorite: Boolean): Observable<Delivery> {
-        return Observable.just(database.getDeliveryDao()).map {
-            it.updateDeliveryFavoriteState(id, isFavorite)
-            it.getDelivery(id)
-        }.subscribeOn(Schedulers.io())
-
+    fun updateDeliveryFavoriteState(delivery: Delivery): Delivery {
+        database.getDeliveryDao().updateDeliveryFavoriteState(delivery)
+        return getDelivery(delivery.id)
     }
 
     fun insertListIntoDB(list: List<Delivery>){
@@ -26,6 +21,10 @@ class LocalDataSource @Inject constructor(private val database: DeliveryLedgerDB
 
     fun getDeliveryCount(): Int{
         return database.getDeliveryDao().getDeliveryCount()
+    }
+
+    fun getDelivery(deliveryId: String): Delivery{
+        return database.getDeliveryDao().getDelivery(deliveryId)
     }
 
     fun clearDb(){

@@ -17,8 +17,8 @@ class Repository @Inject constructor( private val localDataSource: LocalDataSour
         return localDataSource.getDeliveryListDataSource()
     }
 
-    fun updateDeliveryFavoriteState(id: String, isFavorite: Boolean): Observable<Delivery>{
-        return localDataSource.updateDeliveryFavoriteState(id, isFavorite)
+    fun updateDeliveryFavoriteState(delivery: Delivery): Delivery{
+        return localDataSource.updateDeliveryFavoriteState(delivery)
     }
 
     fun getListFromAPI(offset: Int) : Observable<List<Delivery>>{
@@ -31,6 +31,10 @@ class Repository @Inject constructor( private val localDataSource: LocalDataSour
 
     fun getDeliveryCount(): Int{
         return localDataSource.getDeliveryCount()
+    }
+
+    fun getDelivery(deliveryId: String) : Delivery{
+        return localDataSource.getDelivery(deliveryId)
     }
 
     fun clearDb(){

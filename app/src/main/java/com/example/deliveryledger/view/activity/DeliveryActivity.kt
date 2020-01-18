@@ -5,27 +5,19 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
-import com.example.deliveryledger.view.fragment.MyDeliveriesFragment
-import com.example.deliveryledger.viewmodel.DeliveryLedgerViewModel
+import com.example.deliveryledger.view.fragment.DeliveryListFragment
+import com.example.deliveryledger.viewmodel.OnDeliveryItemSelected
 import com.example.deliveryledger.viewmodel.OnEvent
-import com.example.deliveryledger.viewmodel.OnItemSelected
 import com.example.deliveryledger.viewmodel.OnNetworkError
 import javax.inject.Inject
 
 class DeliveryActivity : BaseActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
     lateinit var onEventObserver: MutableLiveData<OnEvent<*>>
-
-    private lateinit var deliveryLedgerViewModel: DeliveryLedgerViewModel
 
     private lateinit var binding: ActivityDeliveryBinding
 
@@ -34,9 +26,6 @@ class DeliveryActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delivery)
         initFragment()
-
-        deliveryLedgerViewModel = ViewModelProviders.of(this, viewModelFactory).
-            get(DeliveryLedgerViewModel::class.java)
 
         onEventObserver.observe(this, Observer {
             handleEvent(it)
@@ -47,7 +36,7 @@ class DeliveryActivity : BaseActivity() {
 
     private fun handleEvent(onEvent: OnEvent<*>){
         when(val event = onEvent.getEvent()){
-            is OnItemSelected -> {
+            is OnDeliveryItemSelected -> {
                 openDetailFragment()
             }
 
@@ -59,7 +48,7 @@ class DeliveryActivity : BaseActivity() {
 
     private fun initFragment(){
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, MyDeliveriesFragment.newInstance())
+            .add(R.id.fragment_container, DeliveryListFragment.newInstance())
             .commit()
     }
 
