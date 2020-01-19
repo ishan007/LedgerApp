@@ -1,11 +1,9 @@
-package com.example.deliveryledger.storage
+package com.example.deliveryledger
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.paging.LimitOffsetDataSource
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.deliveryledger.BaseInstrumentedTest
-import com.example.deliveryledger.LocalDataGeneratorTest
 import com.example.deliveryledger.repository.storage.DeliveryLedgerDB
 import com.example.deliveryledger.repository.storage.LocalDataSource
 import org.junit.After
@@ -30,8 +28,7 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
     @Test
     fun insertData(){
-        val list =
-            LocalDataGeneratorTest.getDeliveryList()
+        val list = LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
         val itemCount = (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
         Assert.assertEquals(list.size, itemCount)
@@ -41,8 +38,7 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
     @Test
     fun updateData(){
-        val list =
-            LocalDataGeneratorTest.getDeliveryList()
+        val list = LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
         val delivery = list[0]
         val updateDelivery = delivery.copy(isFavorite = !delivery.isFavorite)
@@ -54,8 +50,7 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
     @Test
     fun clearDbTest(){
-        val list =
-            LocalDataGeneratorTest.getDeliveryList()
+        val list = LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
         localDataSource.clearDb()
         Assert.assertEquals(0, localDataSource.getDeliveryCount())
