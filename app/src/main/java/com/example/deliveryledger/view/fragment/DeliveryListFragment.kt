@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryListBinding
+import com.example.deliveryledger.di.application.DeliveryApplication
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
-import com.example.deliveryledger.viewmodel.*
+import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
+import com.example.deliveryledger.viewmodel.DeliveryListViewModel
 import com.example.deliveryledger.viewmodel.events.DeliveryObserver
 import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
 import com.example.deliveryledger.viewmodel.events.OnEvent
@@ -52,6 +54,8 @@ class DeliveryListFragment : BaseFragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (activity?.application as DeliveryApplication).appComponent
+            .deliveryViewComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         deliveryListViewModel = ViewModelProviders.of(this, viewModelFactory).
             get(DeliveryListViewModel::class.java)

@@ -8,7 +8,8 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(private val requestApi: RequestApi){
 
     fun getDeliveriesListFromAPI(offset: Int) : Observable<List<Delivery>>{
-        return requestApi.getDeliveriesList(offset, NetworkConstants.RESPONSE_LIMIT)
+        return requestApi.getDeliveriesList(offset, NetworkConstants.PAGE_LIMIT)
+            .retry(NetworkConstants.RETRY_COUNT)
     }
 
 }

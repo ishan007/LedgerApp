@@ -1,8 +1,7 @@
-package com.example.deliveryledger
+package com.example.deliveryledger.repository
 
-import androidx.paging.DataSource
-import androidx.paging.PositionalDataSource
-import com.example.deliveryledger.repository.Repository
+import com.example.deliveryledger.BaseUnitTest
+import com.example.deliveryledger.DataGeneratorTest
 import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.storage.LocalDataSource
@@ -31,8 +30,12 @@ class RepositoryTest : BaseUnitTest(){
 
     @Test
     fun testListFromDB(){
-        val list = DataGeneratorTest.getDeliveryList()
-        val dataSource = getDataSource(list)
+        val list =
+            DataGeneratorTest.getDeliveryList()
+        val dataSource =
+            DataGeneratorTest.getDataSource(
+                list
+            )
 
         Mockito.`when`(localDataSource.getDeliveryListDataSource()).thenReturn(dataSource)
 
@@ -43,7 +46,8 @@ class RepositoryTest : BaseUnitTest(){
 
     @Test
     fun testListFromApi(){
-        val list = DataGeneratorTest.getDeliveryList()
+        val list =
+            DataGeneratorTest.getDeliveryList()
         Mockito.`when`(remoteDataSource.getDeliveriesListFromAPI(0))
             .thenReturn(Observable.just(list))
 
@@ -56,37 +60,14 @@ class RepositoryTest : BaseUnitTest(){
 
     @Test
     fun testInsertListInDB(){
-        val list = DataGeneratorTest.getDeliveryList()
+        val list =
+            DataGeneratorTest.getDeliveryList()
         Mockito.`when`(localDataSource.insertListIntoDB(list)).then {
             Unit
         }
         repository.insertListIntoDB(list)
         Mockito.verify(localDataSource, Mockito.times(1)).insertListIntoDB(list)
     }
-
-
-    private fun getDataSource(list: List<Delivery>): DataSource.Factory<Int, Delivery>{
-        return object : DataSource.Factory<Int, Delivery>(){
-            override fun create(): DataSource<Int, Delivery> {
-                return object : PositionalDataSource<Delivery>(){
-                    override fun loadRange(
-                        params: LoadRangeParams,
-                        callback: LoadRangeCallback<Delivery>
-                    ) {
-
-                    }
-
-                    override fun loadInitial(params: LoadInitialParams,
-                                             callback: LoadInitialCallback<Delivery>
-                    ) {
-                        callback.onResult(list,0)
-                    }
-
-                }
-            }
-        }
-    }
-
 
     @After
     @Throws(IOException::class)

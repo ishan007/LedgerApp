@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryDetailBinding
+import com.example.deliveryledger.di.application.DeliveryApplication
 import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
 import com.example.deliveryledger.viewmodel.DeliveryDetailViewModel
 import javax.inject.Inject
@@ -28,6 +29,8 @@ class DeliveryDetailFragment : BaseFragment() {
     private lateinit var deliveryDetailViewModel: DeliveryDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (activity?.application as DeliveryApplication).appComponent
+            .deliveryViewComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
             get(DeliveryActivityViewModel::class.java)
@@ -51,7 +54,11 @@ class DeliveryDetailFragment : BaseFragment() {
             container, false)
 
         binding.addToFavorite.setOnClickListener {
-            deliveryDetailViewModel.updateDeliveryFavoriteState(binding.delivery!!)
+            val delivery = binding.delivery
+            if(delivery != null){
+                deliveryDetailViewModel
+                    .updateDeliveryFavoriteState(delivery.copy(isFavorite = !delivery.isFavorite))
+            }
         }
 
         return binding.root

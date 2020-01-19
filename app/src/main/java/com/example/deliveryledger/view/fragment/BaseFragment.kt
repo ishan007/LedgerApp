@@ -1,11 +1,13 @@
 package com.example.deliveryledger.view.fragment
 
 
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
+import com.example.deliveryledger.di.view.ActivityScope
 
 /**
  * Base fragment class
  */
-abstract class BaseFragment : DaggerFragment()
+@ActivityScope
+abstract class BaseFragment : Fragment()
 
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
+import com.example.deliveryledger.di.application.DeliveryApplication
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
@@ -22,6 +23,8 @@ class DeliveryActivity : BaseActivity() {
     private lateinit var binding: ActivityDeliveryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (application as DeliveryApplication).appComponent
+            .deliveryViewComponent().create().inject(this)
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delivery)

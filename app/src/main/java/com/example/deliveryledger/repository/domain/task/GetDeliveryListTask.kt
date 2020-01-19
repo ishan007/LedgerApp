@@ -13,7 +13,7 @@ class GetDeliveryListTask @Inject constructor(private val repository: Repository
 
     override fun getDeliveries() : RxPagedListBuilder<Int, Delivery> {
         return RxPagedListBuilder<Int, Delivery>(repository.getDeliveryListDataSource(),
-            NetworkConstants.RESPONSE_LIMIT)
+            NetworkConstants.PAGE_LIMIT)
     }
 
 

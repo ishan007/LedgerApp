@@ -1,4 +1,4 @@
-package com.example.deliveryledger.di
+package com.example.deliveryledger.di.application.module
 
 import androidx.lifecycle.MutableLiveData
 import com.example.deliveryledger.viewmodel.events.OnEvent

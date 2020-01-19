@@ -1,5 +1,7 @@
 package com.example.deliveryledger.view.activity
 
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.example.deliveryledger.di.view.ActivityScope
 
-abstract class BaseActivity : DaggerAppCompatActivity()
+@ActivityScope
+abstract class BaseActivity : AppCompatActivity()

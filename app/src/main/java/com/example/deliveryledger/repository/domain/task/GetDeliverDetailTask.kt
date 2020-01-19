@@ -11,7 +11,9 @@ class GetDeliverDetailTask @Inject constructor(private val repository: Repositor
     DeliveryDetailUseCase{
 
     override fun getDeliveryDetail(id: String): Observable<Delivery> {
-        return Observable.just(repository.getDelivery(id)).subscribeOn(Schedulers.io())
+        return Observable.just(id)
+            .map { repository.getDelivery(it) }
+            .subscribeOn(Schedulers.io())
     }
 
 }

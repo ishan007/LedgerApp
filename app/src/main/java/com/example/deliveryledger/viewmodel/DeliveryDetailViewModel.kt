@@ -22,8 +22,7 @@ class DeliveryDetailViewModel @Inject constructor(
     val delivery: LiveData<Delivery> = _delivery
 
 
-    fun updateDeliveryFavoriteState(delivery: Delivery){
-        val updateDeliveryDetail = delivery.copy(isFavorite = !delivery.isFavorite)
+    fun updateDeliveryFavoriteState(updateDeliveryDetail: Delivery){
         updateDeliveryDetailUseCase.updateDeliveryFavoriteState(updateDeliveryDetail)
             .subscribe(object : DeliveryObserver<Delivery>(onEventObserver, disposable){
                 override fun onNext(t: Delivery) {

@@ -11,7 +11,8 @@ class UpdateDeliveryDetailTask @Inject constructor(private val repository: Repos
     UpdateDeliveryDetailUseCase {
 
     override fun updateDeliveryFavoriteState(delivery: Delivery): Observable<Delivery> {
-        return Observable.just(repository.updateDeliveryFavoriteState(delivery))
+        return Observable.just(delivery)
+            .map { repository.updateDeliveryFavoriteState(it) }
             .subscribeOn(Schedulers.io())
     }
 }

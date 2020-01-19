@@ -1,10 +1,6 @@
-package com.example.deliveryledger.di.repository
+package com.example.deliveryledger.di.repository.module
 
-import android.app.Application
-import androidx.room.Room
 import com.example.deliveryledger.repository.network.RequestApi
-import com.example.deliveryledger.repository.storage.DeliveryLedgerDB
-import com.example.deliveryledger.util.DatabaseConstants
 import com.example.deliveryledger.util.NetworkConstants
 import dagger.Module
 import dagger.Provides
@@ -17,7 +13,7 @@ import javax.inject.Singleton
 
 
 @Module
-class RepositoryModule {
+class NetworkModule{
 
     @Provides
     @Singleton
@@ -25,25 +21,15 @@ class RepositoryModule {
         return retrofit.create(RequestApi::class.java)
     }
 
-
     @Provides
     @Singleton
-    fun provideRetrofitInstance(): Retrofit{
+    fun provideRetrofitInstance(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(NetworkConstants.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(provideOkHttpClient())
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideDeliveryLedgerDB(application: Application): DeliveryLedgerDB{
-        return Room.databaseBuilder(
-            application,
-            DeliveryLedgerDB::class.java, DatabaseConstants.DB_NAME
-        ).build()
     }
 
     private fun provideOkHttpClient(): OkHttpClient {
@@ -55,4 +41,3 @@ class RepositoryModule {
     }
 
 }
-

@@ -1,4 +1,4 @@
-package com.example.deliveryledger.di.repository
+package com.example.deliveryledger.di.repository.module
 
 import com.example.deliveryledger.repository.domain.task.*
 import com.example.deliveryledger.repository.domain.usecase.*

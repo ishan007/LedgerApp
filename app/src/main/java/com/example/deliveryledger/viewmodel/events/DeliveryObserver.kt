@@ -1,6 +1,8 @@
 package com.example.deliveryledger.viewmodel.events
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.deliveryledger.util.AppConstants.TAG
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -19,6 +21,9 @@ open class DeliveryObserver<T>(private val onEvent: MutableLiveData<OnEvent<*>>,
     }
 
     override fun onError(e: Throwable) {
+
+        Log.e(TAG, "Thread name = ${Thread.currentThread().name}")
+
         onEvent.postValue(
             OnEvent(
                 OnNetworkError(

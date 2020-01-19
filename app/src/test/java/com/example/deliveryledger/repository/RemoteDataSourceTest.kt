@@ -1,5 +1,7 @@
-package com.example.deliveryledger
+package com.example.deliveryledger.repository
 
+import com.example.deliveryledger.BaseUnitTest
+import com.example.deliveryledger.DataGeneratorTest
 import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.RemoteDataSource
 import com.example.deliveryledger.repository.network.RequestApi
@@ -21,7 +23,8 @@ class RemoteDataSourceTest : BaseUnitTest(){
 
     @Test
     fun getDeliveryListFromApi(){
-        val list = DataGeneratorTest.getDeliveryList()
+        val list =
+            DataGeneratorTest.getDeliveryList()
         Mockito.`when`(requestApi.getDeliveriesList(0, 20))
             .thenReturn(Observable.just(list))
         val observable = remoteDataSource.getDeliveriesListFromAPI(0)
