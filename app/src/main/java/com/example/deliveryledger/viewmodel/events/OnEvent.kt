@@ -1,4 +1,4 @@
-package com.example.deliveryledger.viewmodel
+package com.example.deliveryledger.viewmodel.events
 
 class OnEvent<out T>(private val event: T) {
 

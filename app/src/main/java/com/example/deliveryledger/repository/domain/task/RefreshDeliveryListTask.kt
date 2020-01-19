@@ -1,7 +1,7 @@
-package com.example.deliveryledger.repository.domain
+package com.example.deliveryledger.repository.domain.task
 
 import com.example.deliveryledger.repository.Repository
-import com.example.deliveryledger.repository.domain.base.RefreshDeliveryListUseCase
+import com.example.deliveryledger.repository.domain.usecase.RefreshDeliveryListUseCase
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.example.deliveryledger.di.repository
 
-import com.example.deliveryledger.repository.domain.*
-import com.example.deliveryledger.repository.domain.base.*
+import com.example.deliveryledger.repository.domain.task.*
+import com.example.deliveryledger.repository.domain.usecase.*
 import dagger.Binds
 import dagger.Module
 

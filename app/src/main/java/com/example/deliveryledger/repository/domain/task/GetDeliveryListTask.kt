@@ -1,8 +1,8 @@
-package com.example.deliveryledger.repository.domain
+package com.example.deliveryledger.repository.domain.task
 
 import androidx.paging.RxPagedListBuilder
 import com.example.deliveryledger.repository.Repository
-import com.example.deliveryledger.repository.domain.base.DeliveryListUseCase
+import com.example.deliveryledger.repository.domain.usecase.DeliveryListUseCase
 import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.util.NetworkConstants
 import javax.inject.Inject

@@ -2,9 +2,11 @@ package com.example.deliveryledger.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.deliveryledger.repository.domain.base.DeliveryDetailUseCase
-import com.example.deliveryledger.repository.domain.base.UpdateDeliveryDetailUseCase
+import com.example.deliveryledger.repository.domain.usecase.DeliveryDetailUseCase
+import com.example.deliveryledger.repository.domain.usecase.UpdateDeliveryDetailUseCase
 import com.example.deliveryledger.repository.entities.Delivery
+import com.example.deliveryledger.viewmodel.events.DeliveryObserver
+import com.example.deliveryledger.viewmodel.events.OnEvent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 

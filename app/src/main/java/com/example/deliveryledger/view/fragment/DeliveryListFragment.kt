@@ -15,6 +15,9 @@ import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryListBinding
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
 import com.example.deliveryledger.viewmodel.*
+import com.example.deliveryledger.viewmodel.events.DeliveryObserver
+import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
+import com.example.deliveryledger.viewmodel.events.OnEvent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -40,7 +43,10 @@ class DeliveryListFragment : BaseFragment() {
     private val adapter: DeliveryListAdapter by lazy {
         DeliveryListAdapter(DeliveryListAdapter.DeliverySelectionListener {
             deliveryActivityViewModel.onDeliverySelected(it.id)
-            onEventObserver.value = OnEvent(OnDeliveryItemSelected)
+            onEventObserver.value =
+                OnEvent(
+                    OnDeliveryItemSelected
+                )
         })
     }
 

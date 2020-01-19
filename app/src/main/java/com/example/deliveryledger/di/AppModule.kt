@@ -1,7 +1,7 @@
 package com.example.deliveryledger.di
 
 import androidx.lifecycle.MutableLiveData
-import com.example.deliveryledger.viewmodel.OnEvent
+import com.example.deliveryledger.viewmodel.events.OnEvent
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable

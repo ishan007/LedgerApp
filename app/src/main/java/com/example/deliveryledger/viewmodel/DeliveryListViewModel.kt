@@ -2,8 +2,8 @@ package com.example.deliveryledger.viewmodel
 
 import androidx.paging.PagedList
 import com.example.deliveryledger.repository.DeliveryDataBoundaryCallback
-import com.example.deliveryledger.repository.domain.base.DeliveryListUseCase
-import com.example.deliveryledger.repository.domain.base.RefreshDeliveryListUseCase
+import com.example.deliveryledger.repository.domain.usecase.DeliveryListUseCase
+import com.example.deliveryledger.repository.domain.usecase.RefreshDeliveryListUseCase
 import com.example.deliveryledger.repository.entities.Delivery
 import io.reactivex.Observable
 import javax.inject.Inject

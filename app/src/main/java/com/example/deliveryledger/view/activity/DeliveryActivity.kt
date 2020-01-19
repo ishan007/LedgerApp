@@ -9,9 +9,9 @@ import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
-import com.example.deliveryledger.viewmodel.OnDeliveryItemSelected
-import com.example.deliveryledger.viewmodel.OnEvent
-import com.example.deliveryledger.viewmodel.OnNetworkError
+import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
+import com.example.deliveryledger.viewmodel.events.OnEvent
+import com.example.deliveryledger.viewmodel.events.OnNetworkError
 import javax.inject.Inject
 
 class DeliveryActivity : BaseActivity() {

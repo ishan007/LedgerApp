@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryDetailBinding
-import com.example.deliveryledger.viewmodel.DeliveryDetailViewModel
 import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
+import com.example.deliveryledger.viewmodel.DeliveryDetailViewModel
 import javax.inject.Inject
 
 

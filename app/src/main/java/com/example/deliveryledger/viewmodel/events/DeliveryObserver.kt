@@ -1,4 +1,4 @@
-package com.example.deliveryledger.viewmodel
+package com.example.deliveryledger.viewmodel.events
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observer
@@ -19,7 +19,13 @@ open class DeliveryObserver<T>(private val onEvent: MutableLiveData<OnEvent<*>>,
     }
 
     override fun onError(e: Throwable) {
-        onEvent.postValue(OnEvent(OnNetworkError(e.localizedMessage ?: "Something went wrong")))
+        onEvent.postValue(
+            OnEvent(
+                OnNetworkError(
+                    e.localizedMessage ?: "Something went wrong"
+                )
+            )
+        )
     }
 
 }

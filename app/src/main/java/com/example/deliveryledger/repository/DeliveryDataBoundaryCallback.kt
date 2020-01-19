@@ -3,11 +3,11 @@ package com.example.deliveryledger.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.example.deliveryledger.repository.domain.base.PageLoadUseCase
+import com.example.deliveryledger.repository.domain.usecase.PageLoadUseCase
 import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.util.AppConstants.TAG
-import com.example.deliveryledger.viewmodel.DeliveryObserver
-import com.example.deliveryledger.viewmodel.OnEvent
+import com.example.deliveryledger.viewmodel.events.DeliveryObserver
+import com.example.deliveryledger.viewmodel.events.OnEvent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -26,7 +26,6 @@ class DeliveryDataBoundaryCallback @Inject constructor(
         Log.e(TAG,"OnZero Item loaded")
         pageLoadUseCase.loadData(BoundaryState.INITIAL_ITEM_LOADED)
             .subscribe(DeliveryObserver<Unit>(onEventObserver, disposable))
-
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: Delivery) {

@@ -1,4 +1,4 @@
-package com.example.deliveryledger.viewmodel
+package com.example.deliveryledger.viewmodel.events
 
 
 sealed class EventType
