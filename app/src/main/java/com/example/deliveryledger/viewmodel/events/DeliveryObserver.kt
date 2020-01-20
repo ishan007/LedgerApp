@@ -1,12 +1,16 @@
 package com.example.deliveryledger.viewmodel.events
 
 import androidx.lifecycle.MutableLiveData
+import com.example.deliveryledger.util.Util
+import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class DeliveryObserver<T>(private val onEvent: MutableLiveData<OnEvent<*>>,
-                               private val disposable: CompositeDisposable) : Observer<T>{
+open class DeliveryObserver<T>(
+    private val onEvent: MutableLiveData<OnEvent<*>>,
+    private val disposable: CompositeDisposable
+) : Observer<T> {
     override fun onComplete() {
 
     }
@@ -19,12 +23,8 @@ open class DeliveryObserver<T>(private val onEvent: MutableLiveData<OnEvent<*>>,
     }
 
     override fun onError(e: Throwable) {
-
-        onEvent.postValue(
-            OnEvent(
-                OnNetworkError(e.localizedMessage ?: "Something went wrong")
-            )
-        )
+        Util.logError(e.localizedMessage ?: "Something went wrong")
+        onEvent.postValue(OnEvent(OnLoadPageError(DeliveryListFragment::class.java)))
     }
 
 }

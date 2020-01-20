@@ -27,6 +27,10 @@ class DeliveryListViewModel @Inject constructor(
         return refreshDeliveryListUseCase.refreshData()
     }
 
+    fun retry(){
+        boundaryCallback.retry()
+    }
+
     override fun onCleared() {
         boundaryCallback.clear()
         super.onCleared()

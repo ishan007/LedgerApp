@@ -23,34 +23,52 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
 
     @Before
-    fun setup(){
+    fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         db = Room.inMemoryDatabaseBuilder(appContext, DeliveryLedgerDB::class.java).build()
         localDataSource = LocalDataSource(db)
     }
 
     @Test
-    fun insertData(){
+    fun testInsertData() {
         val list =
             LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
-        val itemCount = (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
+        val itemCount =
+            (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
         Assert.assertEquals(list.size, itemCount)
         Assert.assertEquals(list.size, localDataSource.getDeliveryCount())
+    }
+
+
+    @Test
+    fun testInsertSameData() {
+        val list =
+            LocalDataGeneratorTest.getDeliveryList()
+        localDataSource.insertListIntoDB(list)
+        localDataSource.insertListIntoDB(list)
+        val updatedItemCount =
+            (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
+        Assert.assertTrue(updatedItemCount == list.size)
+    }
+
+    @Test
+    fun testInsertEmptyList() {
+        val list = LocalDataGeneratorTest.getDeliveryList()
+        localDataSource.insertListIntoDB(list)
 
         val emptyList = arrayListOf<Delivery>()
         localDataSource.insertListIntoDB(emptyList)
 
-        val updatedItemCount = (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
-
+        val updatedItemCount =
+            (localDataSource.getDeliveryListDataSource().create() as LimitOffsetDataSource).countItems()
         Assert.assertTrue(updatedItemCount == list.size)
     }
 
 
     @Test
-    fun updateData(){
-        val list =
-            LocalDataGeneratorTest.getDeliveryList()
+    fun testUpdateData() {
+        val list = LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
         val delivery = list[0]
         val updateDelivery = delivery.copy(isFavorite = !delivery.isFavorite)
@@ -61,7 +79,7 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
 
     @Test
-    fun clearDbTest(){
+    fun clearDbTest() {
         val list =
             LocalDataGeneratorTest.getDeliveryList()
         localDataSource.insertListIntoDB(list)
@@ -73,7 +91,7 @@ class LocalDataSourceInstrumentTest : BaseInstrumentedTest() {
 
     @After
     @Throws(IOException::class)
-    fun clean(){
+    fun clean() {
         localDataSource.clearDb()
         db.close()
     }

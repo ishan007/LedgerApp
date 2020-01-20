@@ -13,8 +13,8 @@ import com.example.deliveryledger.R
 fun loadImage(view: ImageView, url:String?) {
     Glide.with(view.context)
         .setDefaultRequestOptions(RequestOptions
-            .placeholderOf(R.mipmap.ic_launcher)
-            .error(R.mipmap.ic_launcher))
+            .placeholderOf(R.drawable.default_image_thumbnail)
+            .error(R.drawable.default_image_thumbnail))
         .load(Uri.parse(url ?: ""))
         .into(view)
 }

@@ -62,22 +62,11 @@ class DeliveryListViewModelTest : BaseUnitTest() {
 
     @Test
     fun testRefreshData(){
-        var testObserver = TestObserver<Unit>()
-
-        val errorOnRefreshData = Observable.error<Unit>(IOException())
-        Mockito.`when`(refreshDeliveryListUseCase.refreshData()).thenReturn(errorOnRefreshData)
-        var refreshDataResult = deliveryListViewModel.refreshData()
-
-        refreshDataResult.subscribe(testObserver)
-        testObserver.awaitCount(1)
-        testObserver.assertSubscribed()
-        testObserver.assertError(IOException::class.java)
-        testObserver.dispose()
-
+        val testObserver = TestObserver<Unit>()
         val successOnRefreshData = Observable.just(Unit)
         Mockito.`when`(refreshDeliveryListUseCase.refreshData()).thenReturn(successOnRefreshData)
-        refreshDataResult = deliveryListViewModel.refreshData()
-        testObserver = TestObserver()
+
+        val refreshDataResult = deliveryListViewModel.refreshData()
         refreshDataResult.subscribe(testObserver)
         testObserver.awaitCount(1)
         testObserver.assertSubscribed()
@@ -85,6 +74,21 @@ class DeliveryListViewModelTest : BaseUnitTest() {
         testObserver.assertComplete()
         testObserver.dispose()
 
+    }
+
+    @Test
+    fun testExceptionOnRefreshData(){
+        val testObserver = TestObserver<Unit>()
+
+        val errorOnRefreshData = Observable.error<Unit>(IOException())
+        Mockito.`when`(refreshDeliveryListUseCase.refreshData()).thenReturn(errorOnRefreshData)
+        val refreshDataResult = deliveryListViewModel.refreshData()
+
+        refreshDataResult.subscribe(testObserver)
+        testObserver.awaitCount(1)
+        testObserver.assertSubscribed()
+        testObserver.assertError(IOException::class.java)
+        testObserver.dispose()
     }
 
     private fun getRxPagedListBuilder(list: List<Delivery>): RxPagedListBuilder<Int, Delivery>{

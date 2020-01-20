@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="delivery"
             type="com.example.deliveryledger.repository.entities.Delivery" />
@@ -16,88 +17,73 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorPrimary"
-        android:padding="@dimen/cardViewPadding"
-        app:cardElevation="@dimen/carViewElevation"
-        app:cardCornerRadius="@dimen/cardViewCornerRadius">
-        
+        android:layout_margin="@dimen/delivery_list_item_margin"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="@dimen/carViewElevation">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent">
-            
+            android:padding="@dimen/cardViewPadding">
+
             <ImageView
                 android:id="@+id/goods_iv"
                 android:layout_width="@dimen/goodsThumbnailSize"
                 android:layout_height="@dimen/goodsThumbnailSize"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:contentDescription="@string/goods_image"
-                app:imageUrl="@{delivery.goodsPicture}"/>
+                app:imageUrl="@{delivery.goodsPicture}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/text_container_ll"
+
+            <TextView
+                android:id="@+id/from_tv"
+                android:layout_width="@dimen/from_tv_width"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/textPadding"
+                android:text="@{String.format(@string/from_delivery, delivery.route.start)}"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/delivery_item_text_size"
+                app:layout_constraintStart_toEndOf="@id/goods_iv"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/to_tv"
+                android:layout_width="@dimen/from_tv_width"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/textPadding"
+                android:text="@{String.format(@string/to_delivery, delivery.route.end)}"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/delivery_item_text_size"
+                app:layout_constraintStart_toEndOf="@id/goods_iv"
+                app:layout_constraintTop_toBottomOf="@+id/from_tv"/>
+
+
+            <ImageView
+                android:id="@+id/favorite_iv"
+                android:layout_width="@dimen/favIconSize"
+                android:layout_height="@dimen/favIconSize"
+                android:contentDescription="@string/favorite_icon"
+                android:scaleType="centerInside"
+                android:src="@{delivery.favorite ? @drawable/favorite : @drawable/favorite_place_holder}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/price_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/goods_iv"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/from_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:padding="@dimen/textPadding"
-                    android:text="@{String.format(@string/from_delivery, delivery.route.start)}"/>
-
-                <TextView
-                    android:id="@+id/to_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:padding="@dimen/textPadding"
-                    android:text="@{String.format(@string/to_delivery, delivery.route.end)}"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@+id/text_container_ll"
+                android:padding="@dimen/textPadding"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/delivery_item_text_size"
+                app:deliveryFee="@{delivery.deliveryFee}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:orientation="vertical">
+                app:layout_constraintTop_toBottomOf="@id/favorite_iv"
+                app:surcharge="@{delivery.surcharge}" />
 
-                <ImageView
-                    android:id="@+id/favorite_iv"
-                    android:layout_width="@dimen/favIconSize"
-                    android:layout_height="@dimen/favIconSize"
-                    android:layout_gravity="end"
-                    android:contentDescription="@string/favorite_icon"
-                    android:src="@drawable/favorite"
-                    android:scaleType="centerInside"
-                    android:visibility="@{delivery.favorite ? view.VISIBLE : view.GONE}"/>
 
-                <TextView
-                    android:id="@+id/price_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:textColor="@color/white"
-                    android:padding="@dimen/textPadding"
-                    app:deliveryFee="@{delivery.deliveryFee}"
-                    app:surcharge="@{delivery.surcharge}"/>
-
-            </LinearLayout>
-
-            
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
+
     </androidx.cardview.widget.CardView>
 
 </layout>

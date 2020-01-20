@@ -40,10 +40,10 @@ class DeliveryDetailViewModelTest : BaseUnitTest() {
 
 
     @Test
-    fun testUpdateFeature(){
+    fun testUpdateFeatureForFavorite(){
         val delivery =
             DataGeneratorTest.getDelivery()
-        var updateDelivery = delivery.copy(isFavorite = true)
+        val updateDelivery = delivery.copy(isFavorite = true)
 
         Mockito.`when`(updateDeliveryDetailUseCase.updateDeliveryFavoriteState(updateDelivery))
             .thenReturn(Observable.just(updateDelivery))
@@ -52,7 +52,15 @@ class DeliveryDetailViewModelTest : BaseUnitTest() {
 
         Assert.assertTrue(deliveryDetailViewModel.delivery.value?.isFavorite ?: false)
 
-        updateDelivery = delivery.copy(isFavorite = false)
+
+    }
+
+
+    @Test
+    fun testUpdateFeatureForUnFavorite(){
+        val delivery =
+            DataGeneratorTest.getDelivery()
+        val updateDelivery = delivery.copy(isFavorite = false)
 
         Mockito.`when`(updateDeliveryDetailUseCase.updateDeliveryFavoriteState(updateDelivery))
             .thenReturn(Observable.just(updateDelivery))
@@ -75,6 +83,16 @@ class DeliveryDetailViewModelTest : BaseUnitTest() {
 
         Assert.assertEquals(deliveryDetailViewModel.delivery.value?.id, delivery.id)
 
+    }
+
+
+    @Test
+    fun testSelectedDeliveryWithInvalidId(){
+        val delivery = DataGeneratorTest.getDelivery()
+        Mockito.`when`(deliveryDetailUseCase.getDeliveryDetail(delivery.id))
+            .thenReturn(Observable.just(delivery))
+
+        deliveryDetailViewModel.setSelectedDelivery(delivery.id)
 
         Mockito.`when`(deliveryDetailUseCase.getDeliveryDetail("INVALID_ID"))
             .thenReturn(Observable.empty())
@@ -82,7 +100,6 @@ class DeliveryDetailViewModelTest : BaseUnitTest() {
         deliveryDetailViewModel.setSelectedDelivery("INVALID_ID")
 
         Assert.assertEquals(deliveryDetailViewModel.delivery.value?.id, delivery.id)
-
     }
 
 

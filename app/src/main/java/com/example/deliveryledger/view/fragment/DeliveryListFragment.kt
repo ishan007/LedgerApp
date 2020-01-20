@@ -7,19 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryListBinding
 import com.example.deliveryledger.di.application.DeliveryApplication
+import com.example.deliveryledger.view.activity.DeliveryActivity
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
 import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
 import com.example.deliveryledger.viewmodel.DeliveryListViewModel
-import com.example.deliveryledger.viewmodel.events.DeliveryObserver
-import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
-import com.example.deliveryledger.viewmodel.events.OnEvent
+import com.example.deliveryledger.viewmodel.events.*
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -46,9 +46,7 @@ class DeliveryListFragment : BaseFragment() {
         DeliveryListAdapter(DeliveryListAdapter.DeliverySelectionListener {
             deliveryActivityViewModel.onDeliverySelected(it.id)
             onEventObserver.value =
-                OnEvent(
-                    OnDeliveryItemSelected
-                )
+                OnEvent(OnDeliveryItemSelected(DeliveryActivity::class.java))
         })
     }
 
@@ -57,11 +55,41 @@ class DeliveryListFragment : BaseFragment() {
         (activity?.application as DeliveryApplication).appComponent
             .deliveryViewComponent().create().inject(this)
         super.onCreate(savedInstanceState)
-        deliveryListViewModel = ViewModelProviders.of(this, viewModelFactory).
-            get(DeliveryListViewModel::class.java)
-        deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory).
-            get(DeliveryActivityViewModel::class.java)
+        deliveryListViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(DeliveryListViewModel::class.java)
+        deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory)
+            .get(DeliveryActivityViewModel::class.java)
+
+        onEventObserver.observe(this, Observer {
+            val eventType = it.peekEvent() as EventType
+            //handle events specific to this fragment as generic events will be handled by
+            //activity on which this fragment is attached
+            if(eventType.classType == DeliveryListFragment::class.java){
+                handleEvent(it)
+            }
+        })
     }
+
+
+    /**
+     *  Handles events, it may be network error or any other event
+     */
+    private fun handleEvent(onEvent: OnEvent<*>){
+        when(onEvent.consumeEvent()){
+            is OnShowLoader -> {
+                binding.loader.visibility = View.VISIBLE
+            }
+
+            is OnHideLoader -> {
+                binding.loader.visibility = View.GONE
+            }
+
+            is OnLoadPageError -> {
+                showRetryError()
+            }
+        }
+    }
+
 
 
     override fun onCreateView(
@@ -72,7 +100,8 @@ class DeliveryListFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(context),
             R.layout.fragment_delivery_list,
-            container, false)
+            container, false
+        )
 
         initDeliveryListAdapter()
         initSwipeRefresh()
@@ -90,29 +119,48 @@ class DeliveryListFragment : BaseFragment() {
         super.onStop()
     }
 
-    private fun initDeliveryListAdapter(){
+    private fun initDeliveryListAdapter() {
         binding.deliveryRv.adapter = adapter
         val layoutManager = LinearLayoutManager(context)
         binding.deliveryRv.layoutManager = layoutManager
-        binding.deliveryRv.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
     }
 
 
-    private fun initSwipeRefresh(){
+    // allows user to refresh delivery list on swipe gesture
+    private fun initSwipeRefresh() {
         binding.swipeRefreshView.setOnRefreshListener {
             deliveryListViewModel.refreshData()
-                .subscribe(object : DeliveryObserver<Unit>(onEventObserver, disposable){
+                .subscribe(object : DeliveryObserver<Unit>(onEventObserver, disposable) {
                     override fun onComplete() {
                         binding.swipeRefreshView.isRefreshing = false
                     }
 
                     override fun onError(e: Throwable) {
                         binding.swipeRefreshView.isRefreshing = false
-                        super.onError(e)
+                        showRefreshError()
                     }
                 })
         }
     }
+
+    private fun showRetryError(){
+        Snackbar.make(
+            binding.coordinatorLayout,
+            getString(R.string.load_page_error),
+            Snackbar.LENGTH_INDEFINITE
+        ).setAction(getString(R.string.retry)) {
+            deliveryListViewModel.retry()
+        }.show()
+    }
+
+    private fun showRefreshError(){
+        Snackbar.make(
+            binding.coordinatorLayout,
+            getString(R.string.refresh_error),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
 
 
     companion object {

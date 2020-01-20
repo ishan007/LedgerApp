@@ -5,7 +5,7 @@ import com.example.deliveryledger.di.application.module.AppModule
 import com.example.deliveryledger.di.repository.module.RepositoryModule
 import com.example.deliveryledger.di.view.DeliveryViewComponent
 import com.example.deliveryledger.di.view.DeliveryViewModule
-import com.example.deliveryledger.view.activity.MainActivity
+import com.example.deliveryledger.view.activity.SplashActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -24,6 +24,6 @@ interface AppComponent {
 
     fun deliveryViewComponent(): DeliveryViewComponent.Factory
 
-    fun inject(activity: MainActivity)
+    fun inject(activity: SplashActivity)
 
 }

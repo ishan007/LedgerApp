@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="delivery"
             type="com.example.deliveryledger.repository.entities.Delivery" />
@@ -13,169 +14,197 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/list_view_bg_color"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
-            android:id="@+id/scroll_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/favorite_card">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/route_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/route_card_margin"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/carViewElevation"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/route_card"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorAccent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:padding="@dimen/cardViewPadding"
-                    app:cardElevation="@dimen/carViewElevation"
-                    app:cardCornerRadius="@dimen/cardViewCornerRadius">
+                    android:layout_height="wrap_content">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/from_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/textPadding"
+                        android:text="@{String.format(@string/from_delivery, delivery.route.start)}"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/route_detail_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/from_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:padding="@dimen/textPadding"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:text="@{String.format(@string/from_delivery, delivery.route.start)}"/>
+                    <TextView
+                        android:id="@+id/to_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/textPadding"
+                        android:text="@{String.format(@string/to_delivery, delivery.route.end)}"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/route_detail_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/from_tv" />
 
-                        <TextView
-                            android:id="@+id/to_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/textPadding"
-                            app:layout_constraintTop_toBottomOf="@+id/from_tv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:textColor="@color/white"
-                            android:text="@{String.format(@string/to_delivery, delivery.route.end)}"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/goods_detail_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorAccent"
-                    app:layout_constraintTop_toBottomOf="@+id/route_card"
-                    android:layout_marginTop="@dimen/goodsDetailCardTopMargin"
-                    android:padding="@dimen/cardViewPadding"
-                    app:cardElevation="@dimen/carViewElevation"
-                    app:cardCornerRadius="@dimen/cardViewCornerRadius">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/goods_to_deliver_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:text="@string/goods_to_deliver"/>
-
-                        <ImageView
-                            android:id="@+id/goods_to_deliver_iv"
-                            android:layout_width="@dimen/goodsImageSize"
-                            android:layout_height="@dimen/goodsImageSize"
-                            android:layout_marginTop="@dimen/goodsImageTopMargin"
-                            app:layout_constraintTop_toBottomOf="@+id/goods_to_deliver_tv"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:contentDescription="@string/goods_image"
-                            app:imageUrl="@{delivery.goodsPicture}"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/price_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorAccent"
-                    app:layout_constraintTop_toBottomOf="@+id/goods_detail_card"
-                    android:layout_marginTop="@dimen/priceCardTopMargin"
-                    android:padding="@dimen/cardViewPadding"
-                    app:cardElevation="@dimen/carViewElevation"
-                    app:cardCornerRadius="@dimen/cardViewCornerRadius">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/price_label_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:padding="@dimen/textPadding"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:text="@string/delivery_fee" />
-
-                        <TextView
-                            android:id="@+id/price_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:padding="@dimen/textPadding"
-                            android:textColor="@color/white"
-                            android:layout_toRightOf="@+id/price_label_tv"
-                            android:layout_toEndOf="@+id/price_label_tv"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            app:deliveryFee="@{delivery.deliveryFee}"
-                            app:surcharge="@{delivery.surcharge}" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
-
-
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/favorite_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            android:padding="@dimen/cardViewPadding"
-            app:cardElevation="@dimen/carViewElevation"
-            app:cardCornerRadius="@dimen/cardViewCornerRadius">
-
-            <Button
-                android:id="@+id/add_to_favorite"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/goods_detail_card"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/addToFavoriteBtnHeight"
-                android:text="@string/add_to_favorite"
-                android:drawableRight="@drawable/favorite"
-                android:drawableEnd="@drawable/favorite"
-                android:textColor="@{delivery.favorite ? color.RED : color.GREEN}"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/goods_detail_card_margin"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="@dimen/carViewElevation"
+                app:layout_constraintTop_toBottomOf="@+id/route_card">
 
-        </androidx.cardview.widget.CardView>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/goods_to_deliver_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/textPadding"
+                        android:text="@string/goods_to_deliver"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/good_detail_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/goods_to_deliver_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/goodsImageTopMargin"
+                        android:contentDescription="@string/goods_image"
+                        app:imageUrl="@{delivery.goodsPicture}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/goods_to_deliver_tv" />
+
+                    <TextView
+                        android:id="@+id/goods_to_deliver_remarks_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/textPadding"
+                        android:text="@{delivery.remarks}"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/good_detail_text_size"
+                        android:textStyle="italic"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/goods_to_deliver_iv" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/price_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/price_card_margin"
+                android:padding="@dimen/cardViewPadding"
+                app:cardElevation="@dimen/carViewElevation"
+                app:layout_constraintTop_toBottomOf="@+id/goods_detail_card">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/price_label_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:padding="@dimen/textPadding"
+                        android:text="@string/delivery_fee"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/price_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/price_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="end"
+                        android:layout_toEndOf="@+id/price_label_tv"
+                        android:layout_toRightOf="@+id/price_label_tv"
+                        android:padding="@dimen/textPadding"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/price_text_size"
+                        app:deliveryFee="@{delivery.deliveryFee}"
+                        app:surcharge="@{delivery.surcharge}" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/favorite_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/favorite_card_margin"
+                app:cardElevation="@dimen/carViewElevation"
+                app:layout_constraintTop_toBottomOf="@+id/price_card"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/add_to_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/addToFavoriteBtnHeight"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/favorite_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/add_to_favorite"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/favorite_text_size" />
+
+                    <ImageView
+                        android:id="@+id/fav_icon_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/favorite_card_margin"
+                        android:layout_marginLeft="@dimen/favorite_card_margin"
+                        android:layout_toEndOf="@+id/favorite_tv"
+                        android:layout_toRightOf="@+id/favorite_tv"
+                        android:contentDescription="@string/favorite_icon"
+                        android:src="@{delivery.favorite ? @drawable/favorite : @drawable/favorite_place_holder}" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
