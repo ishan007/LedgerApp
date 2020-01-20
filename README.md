@@ -7,13 +7,14 @@ As a user I want to be able to see a list of my deliveries, including the receiv
 App is built using clean architecture and mvvm design pattern.
 
 Modules used are as described below
-* **Presentation:** This module includes the UI, ViewModels and DI classes.
+* **View:** This module includes the UI like activities, fragments and adapters.
+* **ViewModel:** This module includes viewmodels which interacts with domain layer and provides data to view.
 * **Domain:** This module contains all business models and use cases. 
     * Entities will be used by presentation layer to render data and perform actions according to business rules.
     * Use cases are interactors and stand for application-specific business rules of the software. This layer is isolated from changes to the database, common frameworks, and the UI. 
-* **Data:** This module provides data from web/local to domain layer. It contains an abstract definition of the different data sources, and how they should be used. It is independent of database and http client implementations. 
-* **Local:** This module contains implementation for providing data from local. It uses room for getting data from local db.
-* **Remote:** This module contains implementation for providing data from http client. It uses retrofit as a source to fetch data from the web.
+* **Repository:** This module provides data from web/local to domain layer. It contains an abstract definition of the different data sources, and how they should be used. It is independent of database and http client implementations. 
+* **Storage:** This module contains implementation for providing data from local. It uses room for getting data from local db.
+* **Network:** This module contains implementation for providing data from http client. It uses retrofit as a source to fetch data from the web.
 
 Along with the Clean Architecture approach, the following Android architecture components are also used:
 * **Room:** Provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
