@@ -25,7 +25,7 @@ android {
             }
         }
     }
-    testBuildType "dev"
+
     buildTypes {
         release {
             minifyEnabled true
@@ -34,17 +34,8 @@ android {
         }
 
         debug {
-            minifyEnabled true
-            shrinkResources true
-            debuggable = true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        dev {
-            minifyEnabled false
             debuggable = true
             multiDexEnabled true
-            signingConfig signingConfigs.debug
         }
 
     }
