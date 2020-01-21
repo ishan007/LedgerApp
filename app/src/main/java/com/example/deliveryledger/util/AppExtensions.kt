@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.deliveryledger.R
+import java.math.BigDecimal
 
 
 @BindingAdapter("imageUrl")
@@ -21,15 +22,15 @@ fun loadImage(view: ImageView, url:String?) {
 
 @BindingAdapter("deliveryFee", "surcharge")
 fun setCost(view: TextView, deliveryFeeStr: String?, surchargeStr: String?){
-    val deliveryFee = convertStringToDouble(deliveryFeeStr)
-    val surcharge = convertStringToDouble(surchargeStr)
+    val deliveryFee = convertStringToBigDecimal(deliveryFeeStr)
+    val surcharge = convertStringToBigDecimal(surchargeStr)
     view.text = String.format("$%.2f", deliveryFee+surcharge)
 }
 
 
-fun convertStringToDouble(str: String?): Double {
+fun convertStringToBigDecimal(str: String?): BigDecimal {
     return if (str?.contains("$") == true)
-        str.replace("$", "").toDouble() else 0.0
+        str.replace("$", "").toBigDecimal() else 0.0.toBigDecimal()
 
 }
 
