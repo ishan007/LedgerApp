@@ -14,6 +14,8 @@ data class OnDeliveryItemSelected(override val classType: Class<*>) : EventType(
 
 data class OnShowLoader(override val classType: Class<*>) : EventType(classType)
 
-data class OnHideLoader(override val classType: Class<*>) : EventType(classType)
+data class OnHideLoader(override val classType: Class<*>, val loadCompleted: Boolean) : EventType(classType)
 
 data class OnLoadPageError(override val classType: Class<*>) : EventType(classType)
+
+data class OnNoInternetConnectionError(override val classType: Class<*>) : EventType(classType)

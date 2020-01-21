@@ -5,6 +5,6 @@ import io.reactivex.Observable
 
 interface PageLoadUseCase {
 
-    fun loadData(state: DeliveryDataBoundaryCallback.BoundaryState) : Observable<Unit>
+    fun loadData(state: DeliveryDataBoundaryCallback.BoundaryState) : Observable<Int>
 
 }

@@ -9,8 +9,7 @@
     <dimen name="goodsImageTopMargin">10dp</dimen>
     <dimen name="addToFavoriteBtnHeight">50dp</dimen>
     <dimen name="delivery_list_item_margin">8dp</dimen>
-    <dimen name="delivery_item_text_size">17sp</dimen>
-    <dimen name="from_tv_width">230dp</dimen>
+    <dimen name="delivery_item_text_size">12sp</dimen>
     <dimen name="route_card_margin">8dp</dimen>
     <dimen name="route_detail_text_size">19sp</dimen>
     <dimen name="goods_detail_card_margin">8dp</dimen>
@@ -20,4 +19,5 @@
     <dimen name="favorite_card_margin">8dp</dimen>
     <dimen name="favorite_text_size">19sp</dimen>
     <dimen name="splash_text_size">50sp</dimen>
+    <dimen name="delivery_detail_text_width">150dp</dimen>
 </resources>

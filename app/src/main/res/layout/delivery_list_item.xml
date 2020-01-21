@@ -38,23 +38,32 @@
 
             <TextView
                 android:id="@+id/from_tv"
-                android:layout_width="@dimen/from_tv_width"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/textPadding"
+                android:singleLine="true"
                 android:text="@{String.format(@string/from_delivery, delivery.route.start)}"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/delivery_item_text_size"
+                app:layout_constraintWidth_max="@dimen/delivery_detail_text_width"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintWidth_default="wrap"
                 app:layout_constraintStart_toEndOf="@id/goods_iv"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/favorite_iv"/>
 
             <TextView
                 android:id="@+id/to_tv"
-                android:layout_width="@dimen/from_tv_width"
+                android:layout_width="@dimen/delivery_detail_text_width"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/textPadding"
+                android:singleLine="true"
                 android:text="@{String.format(@string/to_delivery, delivery.route.end)}"
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/delivery_item_text_size"
+                app:layout_constraintWidth_max="@dimen/delivery_detail_text_width"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintWidth_default="wrap"
                 app:layout_constraintStart_toEndOf="@id/goods_iv"
                 app:layout_constraintTop_toBottomOf="@+id/from_tv"/>
 
@@ -67,7 +76,8 @@
                 android:scaleType="centerInside"
                 android:src="@{delivery.favorite ? @drawable/favorite : @drawable/favorite_place_holder}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/from_tv"/>
 
             <TextView
                 android:id="@+id/price_tv"

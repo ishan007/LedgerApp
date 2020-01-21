@@ -3,6 +3,7 @@ package com.example.deliveryledger.repository.domain.task
 import com.example.deliveryledger.repository.DeliveryDataBoundaryCallback
 import com.example.deliveryledger.repository.Repository
 import com.example.deliveryledger.repository.domain.usecase.PageLoadUseCase
+import com.example.deliveryledger.util.Util
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -12,7 +13,7 @@ class PageLoadTask @Inject constructor(
 ) : PageLoadUseCase{
 
 
-    override fun loadData(state: DeliveryDataBoundaryCallback.BoundaryState) : Observable<Unit>{
+    override fun loadData(state: DeliveryDataBoundaryCallback.BoundaryState) : Observable<Int>{
         return Observable.just(state).flatMap {
             var offset = 0
             if(state == DeliveryDataBoundaryCallback.BoundaryState.END_ITEM_LOADED){
@@ -20,7 +21,9 @@ class PageLoadTask @Inject constructor(
             }
             repository.getListFromAPI(offset)
         }.flatMap {
-            Observable.just(repository.insertListIntoDB(it))
+            Util.logDebug("Response size ${it.size}")
+            repository.insertListIntoDB(it)
+            Observable.just(it.size)
         }.subscribeOn(Schedulers.io())
     }
 

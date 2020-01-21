@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.FragmentDeliveryListBinding
 import com.example.deliveryledger.di.application.DeliveryApplication
+import com.example.deliveryledger.util.Util
 import com.example.deliveryledger.view.activity.DeliveryActivity
 import com.example.deliveryledger.view.adapter.DeliveryListAdapter
 import com.example.deliveryledger.viewmodel.DeliveryActivityViewModel
@@ -65,6 +66,7 @@ class DeliveryListFragment : BaseFragment() {
             //handle events specific to this fragment as generic events will be handled by
             //activity on which this fragment is attached
             if(eventType.classType == DeliveryListFragment::class.java){
+                Util.logDebug("Event on list fragment : $eventType")
                 handleEvent(it)
             }
         })
@@ -75,16 +77,20 @@ class DeliveryListFragment : BaseFragment() {
      *  Handles events, it may be network error or any other event
      */
     private fun handleEvent(onEvent: OnEvent<*>){
-        when(onEvent.consumeEvent()){
+        when(val event = onEvent.consumeEvent()){
             is OnShowLoader -> {
                 binding.loader.visibility = View.VISIBLE
             }
 
             is OnHideLoader -> {
                 binding.loader.visibility = View.GONE
+                if(event.loadCompleted){
+                    showPageLoadCompletion()
+                }
             }
 
             is OnLoadPageError -> {
+                binding.loader.visibility = View.GONE
                 showRetryError()
             }
         }
@@ -157,6 +163,15 @@ class DeliveryListFragment : BaseFragment() {
         Snackbar.make(
             binding.coordinatorLayout,
             getString(R.string.refresh_error),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+
+    private fun showPageLoadCompletion(){
+        Snackbar.make(
+            binding.coordinatorLayout,
+            getString(R.string.page_load_completed),
             Snackbar.LENGTH_SHORT
         ).show()
     }

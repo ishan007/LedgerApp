@@ -1,7 +1,9 @@
 package com.example.deliveryledger.viewmodel.events
 
 import androidx.lifecycle.MutableLiveData
+import com.example.deliveryledger.repository.network.InternetConnectionException
 import com.example.deliveryledger.util.Util
+import com.example.deliveryledger.view.activity.DeliveryActivity
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
@@ -23,8 +25,16 @@ open class DeliveryObserver<T>(
     }
 
     override fun onError(e: Throwable) {
-        Util.logError(e.localizedMessage ?: "Something went wrong")
-        onEvent.postValue(OnEvent(OnLoadPageError(DeliveryListFragment::class.java)))
+        Util.logError("OnError delivery observable: ${e.message}")
+        when(e){
+            is InternetConnectionException -> {
+                onEvent.postValue(OnEvent(OnNoInternetConnectionError(DeliveryActivity::class.java)))
+            }
+
+            else -> {
+                onEvent.postValue(OnEvent(OnLoadPageError(DeliveryListFragment::class.java)))
+            }
+        }
     }
 
 }

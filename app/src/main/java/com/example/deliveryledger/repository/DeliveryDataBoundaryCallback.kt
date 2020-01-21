@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.example.deliveryledger.repository.domain.usecase.PageLoadUseCase
 import com.example.deliveryledger.repository.entities.Delivery
+import com.example.deliveryledger.repository.network.InternetConnectionException
+import com.example.deliveryledger.util.NetworkConstants
+import com.example.deliveryledger.util.NetworkUtil
 import com.example.deliveryledger.util.Util
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
-import com.example.deliveryledger.viewmodel.events.DeliveryObserver
-import com.example.deliveryledger.viewmodel.events.OnEvent
-import com.example.deliveryledger.viewmodel.events.OnHideLoader
-import com.example.deliveryledger.viewmodel.events.OnShowLoader
+import com.example.deliveryledger.viewmodel.events.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -17,7 +17,8 @@ import javax.inject.Inject
 class DeliveryDataBoundaryCallback @Inject constructor(
     private val pageLoadUseCase: PageLoadUseCase,
     private val disposable: CompositeDisposable,
-    private val onEventObserver: MutableLiveData<OnEvent<*>>
+    private val onEventObserver: MutableLiveData<OnEvent<*>>,
+    private val networkUtil: NetworkUtil
 ) : PagedList.BoundaryCallback<Delivery>(){
 
 
@@ -27,35 +28,48 @@ class DeliveryDataBoundaryCallback @Inject constructor(
 
     override fun onZeroItemsLoaded() {
         Util.logDebug("OnZero Item loaded")
-        pageLoadUseCase.loadData(BoundaryState.INITIAL_ITEM_LOADED)
-            .subscribe(observer)
+        loadData(BoundaryState.INITIAL_ITEM_LOADED)
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: Delivery) {
         Util.logDebug("On next Item loaded")
-        pageLoadUseCase.loadData(BoundaryState.END_ITEM_LOADED)
-            .subscribe(observer)
+        loadData(BoundaryState.END_ITEM_LOADED)
     }
 
     fun retry(){
-        pageLoadUseCase.loadData(BoundaryState.END_ITEM_LOADED)
-            .subscribe(observer)
+        loadData(BoundaryState.END_ITEM_LOADED)
     }
 
-    private val observer = object : DeliveryObserver<Unit>(onEventObserver, disposable){
+
+    private fun loadData(state: BoundaryState){
+        pageLoadUseCase.loadData(state).doOnSubscribe {
+            if(!networkUtil.isNetworkConnected()){
+                throw InternetConnectionException()
+            }
+            disposable.add(it)
+        }.subscribe(observer)
+    }
+
+    private val observer = object : DeliveryObserver<Int>(onEventObserver, disposable){
+
+        private var loadCompleted = false
+
         override fun onSubscribe(d: Disposable) {
             super.onSubscribe(d)
             onEventObserver.postValue(OnEvent(OnShowLoader(DeliveryListFragment::class.java)))
         }
 
-        override fun onComplete() {
-            super.onComplete()
-            onEventObserver.postValue(OnEvent(OnHideLoader(DeliveryListFragment::class.java)))
+        override fun onNext(t: Int) {
+            super.onNext(t)
+            if(t < NetworkConstants.PAGE_LIMIT){
+                loadCompleted = true
+            }
         }
 
-        override fun onError(e: Throwable) {
-            super.onError(e)
-            onEventObserver.postValue(OnEvent(OnHideLoader(DeliveryListFragment::class.java)))
+
+        override fun onComplete() {
+            super.onComplete()
+            onEventObserver.postValue(OnEvent(OnHideLoader(DeliveryListFragment::class.java, loadCompleted)))
         }
     }
 
