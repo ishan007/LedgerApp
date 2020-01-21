@@ -30,12 +30,14 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
+            buildConfigField "String", "BASE_URL", '"https://mock-api-mobile.dev.lalamove.com"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
             debuggable = true
             multiDexEnabled true
+            buildConfigField "String", "BASE_URL", '"https://mock-api-mobile.dev.lalamove.com"'
         }
 
     }

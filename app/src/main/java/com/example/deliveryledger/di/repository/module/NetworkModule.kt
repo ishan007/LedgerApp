@@ -1,5 +1,6 @@
 package com.example.deliveryledger.di.repository.module
 
+import com.example.deliveryledger.BuildConfig
 import com.example.deliveryledger.repository.network.RequestApi
 import com.example.deliveryledger.util.NetworkConstants
 import dagger.Module
@@ -25,7 +26,7 @@ class NetworkModule{
     @Singleton
     fun provideRetrofitInstance(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(NetworkConstants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(provideOkHttpClient())
@@ -34,9 +35,9 @@ class NetworkModule{
 
     private fun provideOkHttpClient(): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
-        okHttpClientBuilder.connectTimeout(30, TimeUnit.SECONDS)
-        okHttpClientBuilder.readTimeout(30, TimeUnit.SECONDS)
-        okHttpClientBuilder.writeTimeout(30, TimeUnit.SECONDS)
+        okHttpClientBuilder.connectTimeout(NetworkConstants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        okHttpClientBuilder.readTimeout(NetworkConstants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+        okHttpClientBuilder.writeTimeout(NetworkConstants.CONNECTION_TIMEOUT, TimeUnit.SECONDS)
         return okHttpClientBuilder.build()
     }
 

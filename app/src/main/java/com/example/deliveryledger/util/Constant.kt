@@ -15,7 +15,7 @@ object DatabaseConstants{
 
 object NetworkConstants{
 
-    const val BASE_URL = "https://mock-api-mobile.dev.lalamove.com"
     const val PAGE_LIMIT = 20
+    const val CONNECTION_TIMEOUT = 30L
 
 }
