@@ -14,6 +14,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
+/**
+ * Callback provided by paging library
+ */
 class DeliveryDataBoundaryCallback @Inject constructor(
     private val pageLoadUseCase: PageLoadUseCase,
     private val disposable: CompositeDisposable,
@@ -44,6 +47,9 @@ class DeliveryDataBoundaryCallback @Inject constructor(
     private fun loadData(state: BoundaryState){
         pageLoadUseCase.loadData(state).doOnSubscribe {
             if(!networkUtil.isNetworkConnected()){
+
+                // throwing exception to control flow is considered anti-pattern
+                // therefore throwing custom exception for specific purpose
                 throw InternetConnectionException()
             }
             disposable.add(it)

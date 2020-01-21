@@ -9,6 +9,10 @@ import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
+
+/**
+ * Custom observer to reduce boiler plate code
+ */
 open class DeliveryObserver<T>(
     private val onEvent: MutableLiveData<OnEvent<*>>,
     private val disposable: CompositeDisposable

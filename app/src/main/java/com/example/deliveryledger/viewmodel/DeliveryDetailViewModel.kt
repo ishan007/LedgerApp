@@ -2,6 +2,7 @@ package com.example.deliveryledger.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.deliveryledger.di.view.ActivityScope
 import com.example.deliveryledger.repository.domain.usecase.DeliveryDetailUseCase
 import com.example.deliveryledger.repository.domain.usecase.UpdateDeliveryDetailUseCase
 import com.example.deliveryledger.repository.entities.Delivery
@@ -10,6 +11,10 @@ import com.example.deliveryledger.viewmodel.events.OnEvent
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
+/**
+ * ViewModel class responsible for handling data for DeliveryDetailFragment
+ */
+@ActivityScope
 class DeliveryDetailViewModel @Inject constructor(
     private val deliverDetailUseCase: DeliveryDetailUseCase,
     private val updateDeliveryDetailUseCase: UpdateDeliveryDetailUseCase,

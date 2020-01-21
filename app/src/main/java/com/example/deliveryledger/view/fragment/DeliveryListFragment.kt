@@ -56,8 +56,11 @@ class DeliveryListFragment : BaseFragment() {
         (activity?.application as DeliveryApplication).appComponent
             .deliveryViewComponent().create().inject(this)
         super.onCreate(savedInstanceState)
+
         deliveryListViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(DeliveryListViewModel::class.java)
+
+        //{@link com.example.deliveryledger.viewmodel.DeliveryActivityViewModel}
         deliveryActivityViewModel = ViewModelProviders.of(activity!!, viewModelFactory)
             .get(DeliveryActivityViewModel::class.java)
 

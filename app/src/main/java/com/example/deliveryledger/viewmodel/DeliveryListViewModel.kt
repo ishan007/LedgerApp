@@ -9,6 +9,9 @@ import com.example.deliveryledger.repository.entities.Delivery
 import io.reactivex.Observable
 import javax.inject.Inject
 
+/**
+ * ViewModel class responsible for handling data for DeliveryListFragment
+ */
 @ActivityScope
 class DeliveryListViewModel @Inject constructor(
     private val deliveryListUseCase: DeliveryListUseCase,

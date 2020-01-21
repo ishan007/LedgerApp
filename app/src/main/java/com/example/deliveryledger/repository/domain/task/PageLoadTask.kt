@@ -13,6 +13,8 @@ class PageLoadTask @Inject constructor(
 ) : PageLoadUseCase{
 
 
+    // fetch data from API and inserts it into db. It returns the list size which is used to
+    // determine whether page loading is completed
     override fun loadData(state: DeliveryDataBoundaryCallback.BoundaryState) : Observable<Int>{
         return Observable.just(state).flatMap {
             var offset = 0
