@@ -23,17 +23,17 @@ Modules used are as described below
 
 
 Along with the Clean Architecture approach, the following Android architecture components are also used:
-* **Room:** Provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
-* **ViewModel:** Designed to store and manage UI related data in a life cycle conscious way
-* **Live Data:** An observable data holder class that, unlike a regular observable, is life cycle aware, meaning it respects the lifecycle of other app components such as activities, fragments, and services
-* **[Paging Library:](https://developer.android.com/topic/libraries/architecture/paging)** Makes it easier to load data gradually and gracefully within RecyclerView.
+* **[Room:](https://developer.android.com/training/data-storage/room/index.html)** Provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
+* **[ViewModel:](https://developer.android.com/reference/android/arch/lifecycle/ViewModel.html)** Designed to store and manage UI related data in a life cycle conscious way
+* **[Live Data:](https://developer.android.com/reference/android/arch/lifecycle/LiveData.html)** An observable data holder class that, unlike a regular observable, is life cycle aware, meaning it respects the lifecycle of other app components such as activities, fragments, and services
+* **[Paging Library:](https://developer.android.com/topic/libraries/architecture/paging)** The Paging Library helps you load and display small chunks of data at a time. Loading partial data on demand reduces usage of network bandwidth and system resources. In this app [PagedList.BoundaryCallback](https://developer.android.com/reference/android/arch/paging/PagedList.BoundaryCallback) is used for syncing data from server in to database.
 
 Also the following technologies are used:
-* **Kotlin:** A statically typed programming language for modern multi-platform applications. Google rates Kotlin a first-class language for writing Android apps.
-* **Dagger 2:** A fully static, compile-time dependency injection framework for both Java and Android.
-* **RxJava 2:**  Reactive Extensions for the Java Virtual Machine (JVM) – a library for composing asynchronous and event-based programs using observable sequences for the JVM.
-* **Retrofit 2:** A type-safe HTTP client for Android and Java  
-* **Mockito:** A mocking framework for unit testing. The Mockito library enables mock creation, verification and stubbing.
+* **[Kotlin:](https://kotlinlang.org/docs/reference/)** A statically typed programming language for modern multi-platform applications. Google rates Kotlin a first-class language for writing Android apps.
+* **[Dagger 2:](https://dagger.dev/tutorial/)** A fully static, compile-time dependency injection framework for both Java and Android.
+* **[RxJava 2:](https://github.com/ReactiveX/RxJava/wiki)**  Reactive Extensions for the Java Virtual Machine (JVM) – a library for composing asynchronous and event-based programs using observable sequences for the JVM.
+* **[Retrofit 2:]()** A type-safe HTTP client for Android and Java  
+* **[Mockito:](https://javadoc.io/static/org.mockito/mockito-core/2.9.0/org/mockito/Mockito.html)** A mocking framework for unit testing. The Mockito library enables mock creation, verification and stubbing.
 
 ## Libraries Used
 * Android Architecture Components -- for using MVVM 
