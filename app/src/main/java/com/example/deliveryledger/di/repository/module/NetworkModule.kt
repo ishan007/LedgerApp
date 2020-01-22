@@ -1,10 +1,8 @@
 package com.example.deliveryledger.di.repository.module
 
-import android.app.Application
 import com.example.deliveryledger.BuildConfig
 import com.example.deliveryledger.repository.network.RequestApi
 import com.example.deliveryledger.util.NetworkConstants
-import com.example.deliveryledger.util.NetworkUtil
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -23,13 +21,6 @@ class NetworkModule{
     fun provideRequestApi(retrofit: Retrofit): RequestApi {
         return retrofit.create(RequestApi::class.java)
     }
-
-    @Singleton
-    @Provides
-    fun provideNetworkUtil(application: Application): NetworkUtil {
-        return NetworkUtil(application)
-    }
-
 
     @Provides
     @Singleton

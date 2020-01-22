@@ -5,8 +5,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import javax.inject.Inject
 
-class NetworkUtil(private val context: Application) {
+
+class NetworkUtil @Inject constructor(private val context: Application) {
 
     @Suppress("DEPRECATION")
     fun isNetworkConnected(): Boolean {
