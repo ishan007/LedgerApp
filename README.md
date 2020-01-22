@@ -19,7 +19,7 @@ App is built using Clean Architecture and MVVM.
     
 * **[Repository:](https://github.com/ishan007/LedgerApp/tree/master/app/src/main/java/com/example/deliveryledger/repository)** This module provides data from **single source of truth** to domain layer. It has access to local datasource(A layer which interacts with database layer) and remote datasource(A layer which interacts with webservice layer). Repository uses local datasource as **single source of truth**. 
 Repository have folowing submodules -
-            * \n*[Domain:](https://github.com/ishan007/LedgerApp/tree/master/app/src/main/java/com/example/deliveryledger/repository/domain)* This module is responsible for performing business logics. It has all the usecases application requires.  
+            * *[Domain:](https://github.com/ishan007/LedgerApp/tree/master/app/src/main/java/com/example/deliveryledger/repository/domain)* This module is responsible for performing business logics. It has all the usecases application requires.  
             * *[Storage:](https://github.com/ishan007/LedgerApp/tree/master/app/src/main/java/com/example/deliveryledger/repository/storage)* This module is resposible for providing data and performing curd operation in to local data base using [Room Library](https://developer.android.com/training/data-storage/room/index.html)
             * *[Network:](https://github.com/ishan007/LedgerApp/tree/master/app/src/main/java/com/example/deliveryledger/repository/network)* This module is responsible for fetching data from webserivices using [Retrofit 2:](https://square.github.io/retrofit/) library
 
