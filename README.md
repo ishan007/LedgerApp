@@ -1,6 +1,5 @@
 # LedgerApp
 
-## About
 User will be able to see the list of his delieveries. This app has three screens, splash screen, listing screen and detail screen.
 User will see the list of deliveries with minimum information on listing screen. He can then select the items on list screen to see it in detail. On detail screen user will see the detail information of the selected delivery and he can mark that delivery as favorite.
 
@@ -27,7 +26,7 @@ Along with the Clean Architecture approach, the following Android architecture c
 * **Room:** Provides an abstraction layer over SQLite to allow for more robust database access while harnessing the full power of SQLite.
 * **ViewModel:** Designed to store and manage UI related data in a life cycle conscious way
 * **Live Data:** An observable data holder class that, unlike a regular observable, is life cycle aware, meaning it respects the lifecycle of other app components such as activities, fragments, and services
-* **Paging Library:** Makes it easier to load data gradually and gracefully within RecyclerView.
+* **![Paging Library:](https://developer.android.com/topic/libraries/architecture/paging)** Makes it easier to load data gradually and gracefully within RecyclerView.
 
 Also the following technologies are used:
 * **Kotlin:** A statically typed programming language for modern multi-platform applications. Google rates Kotlin a first-class language for writing Android apps.
