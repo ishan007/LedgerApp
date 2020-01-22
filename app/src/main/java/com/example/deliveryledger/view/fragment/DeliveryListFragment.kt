@@ -96,6 +96,10 @@ class DeliveryListFragment : BaseFragment() {
                 binding.loader.visibility = View.GONE
                 showRetryError()
             }
+
+            is OnNoInternetConnectionError -> {
+                showNoInternetConnectionError()
+            }
         }
     }
 
@@ -177,6 +181,16 @@ class DeliveryListFragment : BaseFragment() {
             getString(R.string.page_load_completed),
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun showNoInternetConnectionError(){
+        Snackbar.make(
+            binding.coordinatorLayout,
+            getString(R.string.no_internet_connection),
+            Snackbar.LENGTH_INDEFINITE
+        ).setAction(getString(R.string.retry)) {
+            deliveryListViewModel.retry()
+        }.show()
     }
 
 

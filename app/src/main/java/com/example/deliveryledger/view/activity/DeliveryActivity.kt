@@ -9,13 +9,13 @@ import androidx.lifecycle.Observer
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
 import com.example.deliveryledger.di.application.DeliveryApplication
+import com.example.deliveryledger.util.Util
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import com.example.deliveryledger.viewmodel.events.EventType
 import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
 import com.example.deliveryledger.viewmodel.events.OnEvent
 import com.example.deliveryledger.viewmodel.events.OnNoInternetConnectionError
-import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 /**
@@ -66,10 +66,6 @@ class DeliveryActivity : BaseActivity(), FragmentManager.OnBackStackChangedListe
             is OnDeliveryItemSelected -> {
                 openDetailFragment()
             }
-
-            is OnNoInternetConnectionError -> {
-                showNoInternetConnectionError()
-            }
         }
     }
 
@@ -91,14 +87,6 @@ class DeliveryActivity : BaseActivity(), FragmentManager.OnBackStackChangedListe
     private fun setHomeAsUpEnabled(){
         val upEnabled = supportFragmentManager.backStackEntryCount > 0
         supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
-    }
-
-    private fun showNoInternetConnectionError(){
-        Snackbar.make(
-            binding.fragmentContainer,
-            getString(R.string.no_internet_connection),
-            Snackbar.LENGTH_SHORT
-        ).show()
     }
 
     override fun onBackStackChanged() {

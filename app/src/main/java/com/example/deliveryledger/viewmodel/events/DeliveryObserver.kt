@@ -32,7 +32,7 @@ open class DeliveryObserver<T>(
         Util.logError("OnError delivery observable: ${e.message}")
         when(e){
             is InternetConnectionException -> {
-                onEvent.postValue(OnEvent(OnNoInternetConnectionError(DeliveryActivity::class.java)))
+                onEvent.postValue(OnEvent(OnNoInternetConnectionError(DeliveryListFragment::class.java)))
             }
 
             else -> {
