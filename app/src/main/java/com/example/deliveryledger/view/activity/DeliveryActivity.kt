@@ -9,13 +9,11 @@ import androidx.lifecycle.Observer
 import com.example.deliveryledger.R
 import com.example.deliveryledger.databinding.ActivityDeliveryBinding
 import com.example.deliveryledger.di.application.DeliveryApplication
-import com.example.deliveryledger.util.Util
 import com.example.deliveryledger.view.fragment.DeliveryDetailFragment
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import com.example.deliveryledger.viewmodel.events.EventType
 import com.example.deliveryledger.viewmodel.events.OnDeliveryItemSelected
 import com.example.deliveryledger.viewmodel.events.OnEvent
-import com.example.deliveryledger.viewmodel.events.OnNoInternetConnectionError
 import javax.inject.Inject
 
 /**

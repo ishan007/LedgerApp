@@ -3,7 +3,6 @@ package com.example.deliveryledger.viewmodel.events
 import androidx.lifecycle.MutableLiveData
 import com.example.deliveryledger.repository.network.InternetConnectionException
 import com.example.deliveryledger.util.Util
-import com.example.deliveryledger.view.activity.DeliveryActivity
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
