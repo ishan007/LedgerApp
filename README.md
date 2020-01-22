@@ -34,6 +34,7 @@ Also the following technologies are used:
 * **Dagger 2:** A fully static, compile-time dependency injection framework for both Java and Android.
 * **RxJava 2:**  Reactive Extensions for the Java Virtual Machine (JVM) – a library for composing asynchronous and event-based programs using observable sequences for the JVM.
 * **Retrofit 2:** A type-safe HTTP client for Android and Java  
+* **Mockito:** A mocking framework for unit testing. The Mockito library enables mock creation, verification and stubbing.
 
 ## Libraries Used
 * Android Architecture Components -- for using MVVM 
@@ -41,7 +42,7 @@ Also the following technologies are used:
 * Retrofit2 -- for Network api 
 * Dagger2 -- for DI
 * Glide -- for Image Loading
-* Mockito -- mocking framework for testing
+* Mockito -- mocking framework for unit testing
 * Room -- for local DB
 * RxJava2 -- for Reactive Programming
 * Paging -- for pagination   
