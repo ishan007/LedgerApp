@@ -4,7 +4,7 @@
 User will be able to see the list of his delieveries. This app has three screens, splash screen, listing screen and detail screen.
 User will see the list of deliveries with minimum information on listing screen. He can then select the items on list screen to see it in detail. On detail screen user will see the detail information about the delivery and he can mark that delivery as favorite.
 
-![Splash Screen](https://github.com/ishan007/LedgerApp/blob/master/app/sceenshots/device-2020-01-22-111742.png)
+![Splash Screen](https://github.com/ishan007/LedgerApp/blob/master/app/sceenshots/splash-screen.png) ![List Screen](https://github.com/ishan007/LedgerApp/blob/master/app/sceenshots/list-screen.png) ![Detail Screen](https://github.com/ishan007/LedgerApp/blob/master/app/sceenshots/detail-screen.png)
 
 ## Architecture
 App is built using Clean Architecture and MVVM.
