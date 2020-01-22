@@ -1,10 +1,13 @@
 # LedgerApp
 
 ## About
-As a user I want to be able to see a list of my deliveries, including the receiver's photo and the item description. I also want to be able to see the delivery details when I click on the delivery item.
+User will be able to see the list of his delieveries. This app has three screens, splash screen, listing screen and detail screen.
+User will see the list of deliveries with minimum information on listing screen. He can then select the items on list screen to see it in detail. On detail screen user will see the detail information about the delivery and he can mark that delivery as favorite.
+
+![Splash Screen](https://github.com/ishan007/LedgerApp/blob/master/app/sceenshots/device-2020-01-22-111742.png)
 
 ## Architecture
-App is built using clean architecture and mvvm design pattern.
+App is built using Clean Architecture and MVVM.
 
 Modules used are as described below
 * **View:** This module includes the UI like activities, fragments and adapters.
