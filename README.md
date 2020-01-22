@@ -17,7 +17,7 @@ Modules used are as described below
 * **Domain:** This module contains all business models and use cases. 
     * Entities will be used by presentation layer to render data and perform actions according to business rules.
     * Use cases are interactors and stand for application-specific business rules of the software. This layer is isolated from changes to the database, common frameworks, and the UI. 
-* **Repository:** This module provides data from web/local to domain layer. It contains definition of the different data sources, and how they should be used. It is independent of database and http client implementations. 
+* **Repository:** This module provides data from web/local to domain layer. It contains definition of the different data sources, and how they should be used. It is independent of database and http client implementations. Repository uses local datasource as **single source of truth**.
 * **Storage:** This module contains implementation for providing data from local. It uses room for getting data from local db.
 * **Network:** This module contains implementation for providing data from http client. It uses retrofit as a source to fetch data from the web.
 
