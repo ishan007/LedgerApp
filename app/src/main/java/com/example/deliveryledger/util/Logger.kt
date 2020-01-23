@@ -5,14 +5,14 @@ import android.util.Log
 /**
  * Util class
  */
-class Util {
+class Logger {
     companion object{
 
-        fun logError(msg: String){
+        fun e(msg: String){
             Log.e(AppConstants.TAG, msg)
         }
 
-        fun logDebug(msg: String){
+        fun d(msg: String){
             Log.d(AppConstants.TAG, msg)
         }
 

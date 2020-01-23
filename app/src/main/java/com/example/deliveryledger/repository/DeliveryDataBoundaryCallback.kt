@@ -7,7 +7,7 @@ import com.example.deliveryledger.repository.entities.Delivery
 import com.example.deliveryledger.repository.network.InternetConnectionException
 import com.example.deliveryledger.util.NetworkConstants
 import com.example.deliveryledger.util.NetworkUtil
-import com.example.deliveryledger.util.Util
+import com.example.deliveryledger.util.Logger
 import com.example.deliveryledger.view.fragment.DeliveryListFragment
 import com.example.deliveryledger.viewmodel.events.*
 import io.reactivex.disposables.CompositeDisposable
@@ -30,12 +30,12 @@ class DeliveryDataBoundaryCallback @Inject constructor(
     }
 
     override fun onZeroItemsLoaded() {
-        Util.logDebug("OnZero Item loaded")
+        Logger.d("OnZero Item loaded")
         loadData(BoundaryState.INITIAL_ITEM_LOADED)
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: Delivery) {
-        Util.logDebug("On next Item loaded")
+        Logger.d("On next Item loaded")
         loadData(BoundaryState.END_ITEM_LOADED)
     }
 
